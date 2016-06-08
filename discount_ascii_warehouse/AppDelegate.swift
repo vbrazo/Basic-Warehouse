@@ -15,12 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        let navigationController = self.window!.rootViewController as! UINavigationController
-        let viewController = navigationController.topViewController as! ViewController
-        
-        viewController.managedContext = coreDataStack.context
-        
         return true
     }
     
@@ -31,4 +25,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         coreDataStack.saveContext()
     }
+    
 }

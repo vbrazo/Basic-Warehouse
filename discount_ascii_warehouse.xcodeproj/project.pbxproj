@@ -21,6 +21,7 @@
 		EDD401191D07AB8900BD73E6 /* CDP+Warehouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD401181D07AB8900BD73E6 /* CDP+Warehouse.swift */; };
 		EDD4011B1D07ABEF00BD73E6 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4011A1D07ABEF00BD73E6 /* Tag.swift */; };
 		EDD4011D1D07ABFF00BD73E6 /* CDP+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4011C1D07ABFF00BD73E6 /* CDP+Tag.swift */; };
+		EDD401211D07C89A00BD73E6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD401201D07C89A00BD73E6 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		EDD401181D07AB8900BD73E6 /* CDP+Warehouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDP+Warehouse.swift"; sourceTree = "<group>"; };
 		EDD4011A1D07ABEF00BD73E6 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		EDD4011C1D07ABFF00BD73E6 /* CDP+Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDP+Tag.swift"; sourceTree = "<group>"; };
+		EDD401201D07C89A00BD73E6 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			children = (
 				EDAFCBCB1CFFA98B00E43919 /* Global.swift */,
 				EDD401161D07A99B00BD73E6 /* CoreDataStack.swift */,
+				EDD401201D07C89A00BD73E6 /* Models.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD401211D07C89A00BD73E6 /* Models.swift in Sources */,
 				EDD401171D07A99B00BD73E6 /* CoreDataStack.swift in Sources */,
 				EDD401151D07A8F600BD73E6 /* Warehouse.swift in Sources */,
 				EDAFCBCC1CFFA98B00E43919 /* Global.swift in Sources */,

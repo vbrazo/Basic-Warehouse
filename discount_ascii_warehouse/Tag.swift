@@ -12,4 +12,4 @@ import CoreData
 @objc(Tag)
 class Tag: NSManagedObject {
     
-}
+}                   
