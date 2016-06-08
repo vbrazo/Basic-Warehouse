@@ -2,9 +2,9 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15D21" minimumToolsVersion="Automatic">
     <entity name="Tags" representedClassName="Tag" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="warehouse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Warehouse" inverseName="tags" inverseEntity="Warehouse" syncable="YES"/>
+        <relationship name="warehouse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Warehouses" inverseName="tags" inverseEntity="Warehouses" syncable="YES"/>
     </entity>
-    <entity name="Warehouse" representedClassName="Warehouse" syncable="YES">
+    <entity name="Warehouses" representedClassName="Warehouse" syncable="YES">
         <attribute name="face" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -15,6 +15,6 @@
     </entity>
     <elements>
         <element name="Tags" positionX="-54" positionY="36" width="128" height="75"/>
-        <element name="Warehouse" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Warehouses" positionX="-63" positionY="-18" width="128" height="150"/>
     </elements>
 </model>
