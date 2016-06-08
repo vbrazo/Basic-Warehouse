@@ -17,5 +17,6 @@ extension Warehouse {
     @NSManaged var size: Int16
     @NSManaged var stock: Int16
     @NSManaged var type: String
+    @NSManaged var tag: Tag?
 
 }
