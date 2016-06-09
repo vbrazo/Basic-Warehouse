@@ -11,7 +11,7 @@ import CoreData
 
 extension Warehouse {
     
-    @NSManaged var id: Int16
+    @NSManaged var id: String
     @NSManaged var face: String
     @NSManaged var price: Float
     @NSManaged var size: Int16
