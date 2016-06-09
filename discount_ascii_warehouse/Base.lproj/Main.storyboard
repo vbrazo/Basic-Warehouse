@@ -19,22 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Only show items currently in-stock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DX2-1w-8KM">
-                                <rect key="frame" x="348" y="30" width="232" height="18"/>
+                                <rect key="frame" x="379" y="30" width="201" height="16"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="232" id="459-Gg-Hmm"/>
-                                    <constraint firstAttribute="height" constant="18" id="ZsX-aO-pHE"/>
+                                    <constraint firstAttribute="width" constant="201" id="459-Gg-Hmm"/>
+                                    <constraint firstAttribute="height" constant="16" id="ZsX-aO-pHE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="x-icon" translatesAutoresizingMaskIntoConstraints="NO" id="P4L-C6-uKF">
-                                <rect key="frame" x="315" y="26" width="25" height="26"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="SXz-WT-Gy3"/>
-                                    <constraint firstAttribute="height" constant="26" id="jaT-Hc-s3H"/>
-                                </constraints>
-                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vTB-3i-gPo">
                                 <rect key="frame" x="0.0" y="84" width="600" height="516"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5Di-BB-TWR">
@@ -62,13 +55,13 @@
                                                         <constraint firstAttribute="width" constant="155" id="rND-rv-ucC"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwZ-CL-dfM">
                                                     <rect key="frame" x="110" y="137" width="38" height="24"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -94,33 +87,41 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="g5H-1W-vjB"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEARCH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOR-qO-VwJ">
-                                <rect key="frame" x="20" y="29" width="66" height="21"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W8D-wW-bTw">
+                                <rect key="frame" x="14" y="23" width="315" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69k-7a-cXt">
+                                <rect key="frame" x="347" y="25" width="25" height="26"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="hFU-c9-UcF"/>
-                                    <constraint firstAttribute="width" constant="66" id="hm4-wO-Gey"/>
+                                    <constraint firstAttribute="height" constant="26" id="CLq-Mg-q34"/>
+                                    <constraint firstAttribute="width" constant="25" id="dMr-NK-Hv0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" image="x-icon"/>
+                                <connections>
+                                    <action selector="btnCurrentlyInStock:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T8O-9U-jeG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="P4L-C6-uKF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="6" id="5X0-o3-GrN"/>
-                            <constraint firstItem="gOR-qO-VwJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="9" id="8hM-Gx-n3V"/>
                             <constraint firstItem="vTB-3i-gPo" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="64" id="ADH-xc-gEB"/>
                             <constraint firstItem="DX2-1w-8KM" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="ESj-Gf-lVY"/>
+                            <constraint firstItem="69k-7a-cXt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="EwU-Ve-bOR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DX2-1w-8KM" secondAttribute="trailing" id="Fqt-Ep-yUh"/>
                             <constraint firstAttribute="trailing" secondItem="vTB-3i-gPo" secondAttribute="trailing" id="PCb-fx-jjp"/>
-                            <constraint firstItem="gOR-qO-VwJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="T0S-rT-OKB"/>
-                            <constraint firstItem="DX2-1w-8KM" firstAttribute="leading" secondItem="P4L-C6-uKF" secondAttribute="trailing" constant="8" id="d5h-cX-m8p"/>
+                            <constraint firstItem="W8D-wW-bTw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-6" id="S3o-ET-Xxf"/>
+                            <constraint firstItem="DX2-1w-8KM" firstAttribute="leading" secondItem="69k-7a-cXt" secondAttribute="trailing" constant="7" id="S80-VT-7BC"/>
+                            <constraint firstItem="69k-7a-cXt" firstAttribute="leading" secondItem="W8D-wW-bTw" secondAttribute="trailing" constant="18" id="Tx6-7z-bil"/>
+                            <constraint firstItem="W8D-wW-bTw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="3" id="bv4-S4-htQ"/>
                             <constraint firstItem="vTB-3i-gPo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wh5-r0-qzf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vTB-3i-gPo" secondAttribute="bottom" id="y87-CX-Xkw"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="vTB-3i-gPo" id="QQ5-Ig-uk3"/>
+                        <outlet property="labelInStock" destination="DX2-1w-8KM" id="6Rn-cV-V6F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

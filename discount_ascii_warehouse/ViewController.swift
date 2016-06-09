@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreData
 import SwiftyJSON
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,NSFetchedResultsControllerDelegate {
+    
+    @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -21,9 +23,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var grid_json : Array<JSON>!
     
+    let global = Global()
     let managedContext = CoreDataStack().context
     
-    let global = Global()
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Warehouses")
+        let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,33 +55,44 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.collectionView.collectionViewLayout = layout
         //
         
-        self.global.request(ROUTES.search, params: nil, headers: nil, type: HTTPTYPE.GET) { (response) in
-            if response.count > 0 {
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.collectionView.reloadData()
-                })
-                
-            }
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            let fetchError = error as NSError
+            print("\(fetchError), \(fetchError.userInfo)")
         }
         
+        global.refresh_models(stock) { (response) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.collectionView.reloadData()
+            })
+        }
     }
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+        if let sections = fetchedResultsController.sections {
+            return sections.count
+        }
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return grid_json.count
+        if let sections = fetchedResultsController.sections {
+            let sectionInfo = sections[section]
+            return sectionInfo.numberOfObjects
+        }
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Grid", forIndexPath: indexPath) as! CollectionsGrid
         
-        cell.lblFace.text = ""
-        cell.lblPrice.text = ""
+        let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Warehouse
         
+        cell.lblFace.text = record.face
+        cell.lblPrice.text = record.price.description
+    
         return cell
         
     }
