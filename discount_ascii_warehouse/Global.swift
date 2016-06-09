@@ -67,7 +67,50 @@ public class Global {
             
         })
     }
-
+    
+    //
+    // refresh model and populate it again
+    //
+    func refresh_models(stock : CurrentlyInStock, completion: (Bool) -> Void) {
+        modelHelper.delete_all("Warehouses") { (response) in
+        
+            var onlyInStock : Bool!
+            
+            if (stock.type == .SHOW) {
+                onlyInStock = true
+            } else {
+                onlyInStock = false
+            }
+        
+            self.request(ROUTES.search, params: ["onlyInStock": onlyInStock], headers: nil, type: HTTPTYPE.GET) { (response) in
+            
+            if response.count > 0 {
+                
+                for i in 0...response.count-1 {
+                    
+                    let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.coreDataStack.context) as! Warehouse
+                    
+                    if let info = response[i] {
+                        let hash = info[0]
+                        warehouse.face = hash["face"].stringValue
+                        warehouse.id = hash["id"].stringValue
+                        warehouse.price = hash["price"].floatValue
+                        warehouse.size = Int16(hash["size"].intValue)
+                        warehouse.stock = Int16(hash["stock"].intValue)
+                    }
+                    
+                }
+                
+                do {
+                    try self.coreDataStack.context.save()
+                } catch let error as NSError  {
+                    print("Could not save \(error)")
+                }
+                
+            }
+        }
+        }
+    }
 }
 
 extension String {
