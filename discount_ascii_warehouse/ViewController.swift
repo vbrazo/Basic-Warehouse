@@ -10,12 +10,21 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
+struct CurrentlyInStock {
+    enum Type {
+        case SHOW, HIDE
+    }
+    var type : Type
+}
+
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
+    var stock = CurrentlyInStock(type: .SHOW)
     
     var screenSize: CGRect!
     var screenWidth: CGFloat!
@@ -74,6 +83,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             return sections.count
         }
         return 0
+    }
+    
+    @IBAction func btnCurrentlyInStock(sender: AnyObject){
+        if (stock.type == .SHOW){
+            stock.type = .HIDE
+            labelInStock.text = "Show items currently in-stock"
+        } else {
+            stock.type = .SHOW
+            labelInStock.text = "Only Show items currently in-stock"
+        }
+        global.refresh_models(stock) { (response) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.collectionView.reloadData()
+            })
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
