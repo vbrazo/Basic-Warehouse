@@ -15,15 +15,24 @@ class Warehouse: NSManagedObject {
     let global = Global()
     let modelHelper = ModelHelper()
     let coreDataStack = CoreDataStack()
-        
-    func populate_data(){
+    
+    //
+    // refresh model and populate it again
+    //
+    func refresh_model(){
         self.modelHelper.delete_all("Warehouse") { (response) in
-            self.global.request("\(self.global.base_url)/search", params: nil, headers: nil, type: HTTPTYPE.GET) { (response) in
+            self.global.request(ROUTES.search, params: nil, headers: nil, type: HTTPTYPE.GET) { (response) in
                
                 if response.count > 0 {
                     
                     for _ in 0...response.count-1 {
-                        
+                        let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouse", inManagedObjectContext: self.coreDataStack.context) as! Warehouse
+                        warehouse.face = ""
+                        warehouse.id = Int16("")!
+                        warehouse.price = Float("")!
+                        warehouse.size = Int16("")!
+                        warehouse.stock = Int16("")!
+                        warehouse.type = ""
                     }
                         
                     do {
@@ -37,18 +46,4 @@ class Warehouse: NSManagedObject {
         }
     }
         
-    func read_warehouse() -> [Warehouse]? {
-            
-        let fetchRequest = NSFetchRequest(entityName: "Warehouse")
-            
-        do {
-            let results = try self.coreDataStack.context.executeFetchRequest(fetchRequest) as? [Warehouse]
-            return results
-        } catch let error as NSError {
-            print("Could not fetch \(error)")
-            return nil
-        }
-            
-    }
-    
 }

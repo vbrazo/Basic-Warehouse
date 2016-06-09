@@ -41,7 +41,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.collectionView.collectionViewLayout = layout
         //
         
-        self.global.request("\(self.global.base_url)/search", params: nil, headers: nil, type: HTTPTYPE.GET) { (response) in
+        self.global.request(ROUTES.search, params: nil, headers: nil, type: HTTPTYPE.GET) { (response) in
             if response.count > 0 {
                 
                 dispatch_async(dispatch_get_main_queue(), {

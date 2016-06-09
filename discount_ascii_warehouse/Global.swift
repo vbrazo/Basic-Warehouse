@@ -16,8 +16,6 @@ enum HTTPTYPE {
 
 public class Global {
     
-    public var base_url = "http://74.50.59.155:5000/api"
-    
     func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(Array<String>) -> Void)  {
         
         dispatch_async(dispatch_get_main_queue(), {
