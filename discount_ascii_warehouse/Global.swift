@@ -9,6 +9,7 @@
 import UIKit
 import SwiftHTTP
 import SwiftyJSON
+import CoreData
 
 enum HTTPTYPE {
     case GET, PUT, DELETE, POST
@@ -16,13 +17,17 @@ enum HTTPTYPE {
 
 public class Global {
     
-    func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(Array<String>) -> Void)  {
+    let modelHelper = ModelHelper()
+    let coreDataStack = CoreDataStack()
+    
+    func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(Dictionary<Int,JSON>) -> Void)  {
         
         dispatch_async(dispatch_get_main_queue(), {
             
             do {
                 
                 var opt : HTTP!
+                var results : Dictionary<Int,JSON> = [:]
                 
                 switch type {
                     case .GET:
@@ -45,9 +50,10 @@ public class Global {
                     if let text = response.text {
                         let fullNameArr = text.characters.split{$0 == "\n"}.map(String.init)
                         for i in 0...fullNameArr.count-1 {
-                            print(JSON(fullNameArr[i]))
+                            let json = "[\(fullNameArr[i])]"
+                            results[i] = JSON(json.parseJSONString!)
                         }
-                        completion(fullNameArr)
+                        completion(results)
                     } else {
                         print("got an error")
                         return
@@ -61,5 +67,30 @@ public class Global {
             
         })
     }
-    
+
+}
+
+extension String {
+    var parseJSONString: AnyObject? {
+        let data = self.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        if let jsonData = data {
+            // Will return an object or nil if JSON decoding fails
+            do {
+                let message = try NSJSONSerialization.JSONObjectWithData(jsonData, options:.MutableContainers)
+                if let jsonResult = message as? NSMutableArray {
+                    print(jsonResult)
+                    
+                    return jsonResult //Will return the json array output
+                } else {
+                    return nil
+                }
+            } catch let error as NSError {
+                print("An error occurred: \(error)")
+                return nil
+            }
+        } else {
+            // Lossless conversion of the string was not possible
+            return nil
+        }
+    }
 }
