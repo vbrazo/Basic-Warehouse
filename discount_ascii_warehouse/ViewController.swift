@@ -11,8 +11,8 @@ import CoreData
 import SwiftyJSON
 
 struct CurrentlyInStock {
-    enum Type {
-        case SHOW, HIDE
+    enum Type : Int {
+        case SHOW = 0, HIDE
     }
     var type : Type = .SHOW
 }
@@ -25,12 +25,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     
     var timer = NSTimer()
+    var refreshControl = UIRefreshControl()
+    
     let global = Global()
     var stock = CurrentlyInStock()
     let managedContext = CoreDataStack().context
     
     
-    lazy var fetchedResultsController: NSFetchedResultsController = {
+    lazy var fetchedResultsController : NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Warehouses")
         let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -46,14 +48,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        do {
-            try self.fetchedResultsController.performFetch()
-        } catch {
-            let fetchError = error as NSError
-            print("\(fetchError), \(fetchError.userInfo)")
-        }
-        
         refreshGrid()
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+            self.refreshControl.addTarget(self, action: #selector(self.refreshGrid), forControlEvents: UIControlEvents.ValueChanged)
+            self.collectionView.addSubview(self.refreshControl)
+        })
         
     }
     
@@ -121,7 +122,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         global.refresh_models(stock, txtSearch: txtSearch.text!) { (response) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+                do {
+                    try self.fetchedResultsController.performFetch()
+                } catch {
+                    let fetchError = error as NSError
+                    print("\(fetchError), \(fetchError.userInfo)")
+                }
                 self.collectionView.reloadData()
+                if self.refreshControl.refreshing {
+                    self.refreshControl.endRefreshing()
+                }
             })
         }
     }

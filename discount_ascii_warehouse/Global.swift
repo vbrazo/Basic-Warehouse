@@ -52,9 +52,11 @@ public class Global {
                     
                     if let text = response.text {
                         let fullHash = text.characters.split{$0 == "\n"}.map(String.init)
-                        for i in 0...fullHash.count-1 {
-                            let json = "[\(fullHash[i])]"
-                            results[i] = JSON(json.parseJSONString!)
+                        if fullHash.count > 0 {
+                            for i in 0...fullHash.count-1 {
+                                let json = "[\(fullHash[i])]"
+                                results[i] = JSON(json.parseJSONString!)
+                            }
                         }
                         completion(results)
                     } else {
@@ -118,15 +120,11 @@ public class Global {
             
             var params = [String: AnyObject]()
             
-            if (stock.type == .HIDE) {
-                params["onlyInStock"] = true
-            } else {
-                params["onlyInStock"] = false
-            }
-            
             if let text = txtSearch {
                 params["q"] = text
             }
+            
+            params["onlyInStock"] = stock.type.rawValue
             
             self.request(ROUTES.search, params: params, headers: nil, type: HTTPTYPE.GET) { (response) in
             
@@ -154,6 +152,9 @@ public class Global {
                     completionModels(true)
 
                 }
+                
+                completionModels(false)
+                
             }
         }
     }
