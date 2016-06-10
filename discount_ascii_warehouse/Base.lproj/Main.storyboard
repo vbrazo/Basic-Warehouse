@@ -36,36 +36,52 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nzG-Gf-6dd">
-                                                    <rect key="frame" x="92" y="183" width="75" height="30"/>
+                                                    <rect key="frame" x="92" y="179" width="75" height="30"/>
                                                     <state key="normal" title="BUY NOW!"/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Face" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T35-H8-RIY">
-                                                    <rect key="frame" x="52" y="24" width="155" height="68"/>
+                                                    <rect key="frame" x="52" y="71" width="155" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="68" id="kER-oH-Z1p"/>
+                                                        <constraint firstAttribute="height" constant="35" id="kER-oH-Z1p"/>
                                                         <constraint firstAttribute="width" constant="155" id="rND-rv-ucC"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwZ-CL-dfM">
-                                                    <rect key="frame" x="110" y="137" width="38" height="24"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwZ-CL-dfM">
+                                                    <rect key="frame" x="105" y="152" width="48" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="48" id="YKS-z8-EDn"/>
+                                                        <constraint firstAttribute="height" constant="24" id="hXJ-A6-FZy"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Only 1 more in stock)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1W-V9-7rN">
+                                                    <rect key="frame" x="61" y="199" width="137" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="dmD-3R-M9T"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="137" id="kom-db-xL0"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="10"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottomMargin" secondItem="nzG-Gf-6dd" secondAttribute="bottom" id="4Cs-R1-k8d"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="nzG-Gf-6dd" secondAttribute="bottom" constant="4" id="4Cs-R1-k8d"/>
+                                            <constraint firstItem="B1W-V9-7rN" firstAttribute="top" secondItem="nzG-Gf-6dd" secondAttribute="bottom" constant="-10" id="57L-rH-Ke8"/>
                                             <constraint firstItem="mwZ-CL-dfM" firstAttribute="centerX" secondItem="mi0-5t-T8U" secondAttribute="centerX" constant="-0.5" id="7hW-La-zPL"/>
                                             <constraint firstItem="T35-H8-RIY" firstAttribute="centerX" secondItem="mi0-5t-T8U" secondAttribute="centerX" id="EaU-VC-WBc"/>
-                                            <constraint firstItem="T35-H8-RIY" firstAttribute="top" secondItem="mi0-5t-T8U" secondAttribute="topMargin" constant="16" id="dxO-lH-fh2"/>
-                                            <constraint firstItem="nzG-Gf-6dd" firstAttribute="top" secondItem="mwZ-CL-dfM" secondAttribute="bottom" constant="22" id="f6p-g9-hdF"/>
+                                            <constraint firstItem="nzG-Gf-6dd" firstAttribute="top" secondItem="mwZ-CL-dfM" secondAttribute="bottom" constant="3" id="e1o-fe-DHz"/>
+                                            <constraint firstItem="T35-H8-RIY" firstAttribute="centerY" secondItem="mi0-5t-T8U" secondAttribute="centerY" constant="-22" id="hXG-HP-gTr"/>
                                             <constraint firstItem="nzG-Gf-6dd" firstAttribute="centerX" secondItem="mi0-5t-T8U" secondAttribute="centerX" id="lel-N8-17j"/>
+                                            <constraint firstItem="B1W-V9-7rN" firstAttribute="centerX" secondItem="mi0-5t-T8U" secondAttribute="centerX" id="qy0-bG-t40"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="btnBuyNow" destination="nzG-Gf-6dd" id="ibI-cI-6K9"/>
+                                            <outlet property="labelOneMoreInStock" destination="B1W-V9-7rN" id="9wR-i1-nCj"/>
                                             <outlet property="lblFace" destination="T35-H8-RIY" id="79c-hq-1JW"/>
                                             <outlet property="lblPrice" destination="mwZ-CL-dfM" id="tie-SN-PmW"/>
                                         </connections>

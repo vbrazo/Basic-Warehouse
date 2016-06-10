@@ -12,6 +12,7 @@ class CollectionsGrid: UICollectionViewCell {
     
     @IBOutlet weak var lblFace: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var labelOneMoreInStock: UILabel!
     @IBOutlet weak var btnBuyNow: UIButton!
     
 }

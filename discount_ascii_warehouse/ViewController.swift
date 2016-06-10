@@ -59,28 +59,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
     
-    func resetData(){
-        global.resetModel("Warehouses") { (response) in
-            self.global.resetModel("Tags") { (response) in
-                self.txtSearch.text = nil
-                self.stock.type = .SHOW
-                self.timer.invalidate()
-            }
-        }
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: global.screenWidth/2, height: global.screenWidth/2)
+        layout.itemSize = CGSize(width: global.screenWidth/2, height: self.collectionView.frame.height/3)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 2
     
         self.collectionView.collectionViewLayout = layout
-    
+        
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -106,13 +96,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         cell.lblFace.text = record.face
         cell.lblPrice.text = record.price.description
+        
+        if (record.stock==1) {
+            cell.labelOneMoreInStock.hidden = false
+        }
     
         return cell
         
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (global.screenWidth-2)/3, height: (global.screenWidth-2)/3)
+        return CGSize(width: (global.screenWidth-2)/3, height: self.collectionView.frame.height/3)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -134,6 +128,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     self.refreshControl.endRefreshing()
                 }
             })
+        }
+    }
+    
+    func resetData(){
+        global.resetModel("Warehouses") { (response) in
+            self.global.resetModel("Tags") { (response) in
+                self.txtSearch.text = nil
+                self.stock.type = .SHOW
+                self.timer.invalidate()
+            }
         }
     }
     
