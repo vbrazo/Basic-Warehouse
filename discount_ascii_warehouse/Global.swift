@@ -17,6 +17,10 @@ enum HTTPTYPE {
 
 public class Global {
     
+    var screenWidth: CGFloat = UIScreen.mainScreen().bounds.width
+    var screenHeight: CGFloat = UIScreen.mainScreen().bounds.height
+    let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
     let modelHelper = ModelHelper()
     let coreDataStack = CoreDataStack()
     
@@ -48,9 +52,9 @@ public class Global {
                     }
                     
                     if let text = response.text {
-                        let fullNameArr = text.characters.split{$0 == "\n"}.map(String.init)
-                        for i in 0...fullNameArr.count-1 {
-                            let json = "[\(fullNameArr[i])]"
+                        let fullHash = text.characters.split{$0 == "\n"}.map(String.init)
+                        for i in 0...fullHash.count-1 {
+                            let json = "[\(fullHash[i])]"
                             results[i] = JSON(json.parseJSONString!)
                         }
                         completion(results)
@@ -68,47 +72,47 @@ public class Global {
         })
     }
     
-    //
-    // refresh model and populate it again
-    //
-    func refresh_models(stock : CurrentlyInStock, completion: (Bool) -> Void) {
+    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, completion: (Bool) -> Void) {
+        
         modelHelper.delete_all("Warehouses") { (response) in
-        
-            var onlyInStock : Bool!
             
-            if (stock.type == .SHOW) {
-                onlyInStock = true
+            var params = [String: AnyObject]()
+            
+            if (stock.type == .HIDE) {
+                params["onlyInStock"] = true
             } else {
-                onlyInStock = false
+                params["onlyInStock"] = false
             }
-        
-            self.request(ROUTES.search, params: ["onlyInStock": onlyInStock], headers: nil, type: HTTPTYPE.GET) { (response) in
             
-            if response.count > 0 {
-                
-                for i in 0...response.count-1 {
-                    
-                    let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.coreDataStack.context) as! Warehouse
-                    
-                    if let info = response[i] {
-                        let hash = info[0]
-                        warehouse.face = hash["face"].stringValue
-                        warehouse.id = hash["id"].stringValue
-                        warehouse.price = hash["price"].floatValue
-                        warehouse.size = Int16(hash["size"].intValue)
-                        warehouse.stock = Int16(hash["stock"].intValue)
-                    }
-                    
-                }
-                
-                do {
-                    try self.coreDataStack.context.save()
-                } catch let error as NSError  {
-                    print("Could not save \(error)")
-                }
-                
+            if let text = txtSearch {
+                params["q"] = text
             }
-        }
+            
+            self.request(ROUTES.search, params: params, headers: nil, type: HTTPTYPE.GET) { (response) in
+            
+                if response.count > 0 {
+                    for i in 0...response.count-1 {
+        
+                        let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.coreDataStack.context) as! Warehouse
+                    
+                        if let info = response[i] {
+                            let hash = info[0]
+                            warehouse.face = hash["face"].stringValue
+                            warehouse.id = hash["id"].stringValue
+                            warehouse.price = hash["price"].floatValue
+                            warehouse.size = Int16(hash["size"].intValue)
+                            warehouse.stock = Int16(hash["stock"].intValue)
+                        }
+                    }
+                
+                    do {
+                        try self.coreDataStack.context.save()
+                    } catch let error as NSError  {
+                        print("Could not save \(error)")
+                    }
+
+                }
+            }
         }
     }
 }
@@ -117,13 +121,10 @@ extension String {
     var parseJSONString: AnyObject? {
         let data = self.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         if let jsonData = data {
-            // Will return an object or nil if JSON decoding fails
             do {
-                let message = try NSJSONSerialization.JSONObjectWithData(jsonData, options:.MutableContainers)
+                let message = try NSJSONSerialization.JSONObjectWithData(jsonData, options: .MutableContainers)
                 if let jsonResult = message as? NSMutableArray {
-                    print(jsonResult)
-                    
-                    return jsonResult //Will return the json array output
+                    return jsonResult
                 } else {
                     return nil
                 }
@@ -132,7 +133,6 @@ extension String {
                 return nil
             }
         } else {
-            // Lossless conversion of the string was not possible
             return nil
         }
     }

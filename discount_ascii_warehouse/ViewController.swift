@@ -14,29 +14,22 @@ struct CurrentlyInStock {
     enum Type {
         case SHOW, HIDE
     }
-    var type : Type
+    var type : Type = .SHOW
 }
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
+    
     
     @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    
-    var stock = CurrentlyInStock(type: .SHOW)
-    
-    var screenSize: CGRect!
-    var screenWidth: CGFloat!
-    var screenHeight: CGFloat!
-    
-    var grid_json : Array<JSON>!
     
     let global = Global()
+    var stock = CurrentlyInStock()
     let managedContext = CoreDataStack().context
     
+    
     lazy var fetchedResultsController: NSFetchedResultsController = {
-        
         let fetchRequest = NSFetchRequest(entityName: "Warehouses")
         let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -48,21 +41,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return fetchedResultsController
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        screenSize = UIScreen.mainScreen().bounds
-        screenWidth = screenSize.width
-        screenHeight = screenSize.height
-        
-        // collectionView layout configs
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: screenWidth/2, height: screenWidth/2)
+        layout.itemSize = CGSize(width: global.screenWidth/2, height: global.screenWidth/2)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 2
         self.collectionView.collectionViewLayout = layout
-        //
         
         do {
             try self.fetchedResultsController.performFetch()
@@ -71,33 +59,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             print("\(fetchError), \(fetchError.userInfo)")
         }
         
-        global.refresh_models(stock) { (response) in
+        global.refresh_models(stock, txtSearch: nil) { (response) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.collectionView.reloadData()
             })
         }
+        
     }
-
+    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         if let sections = fetchedResultsController.sections {
             return sections.count
         }
         return 0
-    }
-    
-    @IBAction func btnCurrentlyInStock(sender: AnyObject){
-        if (stock.type == .SHOW){
-            stock.type = .HIDE
-            labelInStock.text = "Show items currently in-stock"
-        } else {
-            stock.type = .SHOW
-            labelInStock.text = "Only Show items currently in-stock"
-        }
-        global.refresh_models(stock) { (response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.collectionView.reloadData()
-            })
-        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -122,11 +96,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (screenWidth-2)/3, height: (screenWidth-2)/3)
+        return CGSize(width: (global.screenWidth-2)/3, height: (global.screenWidth-2)/3)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return sectionInsets
+        return global.sectionInsets
+    }
+    
+    @IBAction func btnCurrentlyInStock(sender: AnyObject){
+        if (stock.type == .SHOW){
+            stock.type = .HIDE
+            labelInStock.text = "Show items currently in-stock"
+        } else {
+            stock.type = .SHOW
+            labelInStock.text = "Only Show items currently in-stock"
+        }
+        
+        global.refresh_models(stock, txtSearch: nil) { (response) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.collectionView.reloadData()
+            })
+        }
+        
     }
     
 }
