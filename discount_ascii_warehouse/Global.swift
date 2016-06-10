@@ -21,7 +21,6 @@ public class Global {
     var screenHeight: CGFloat = UIScreen.mainScreen().bounds.height
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     
-    let modelHelper = ModelHelper()
     let coreDataStack = CoreDataStack()
     
     func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(Dictionary<Int,JSON>) -> Void)  {
@@ -72,9 +71,50 @@ public class Global {
         })
     }
     
-    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, completion: (Bool) -> Void) {
+    func resetModel(entity: String, completion: (Bool) -> Void) {
         
-        modelHelper.delete_all("Warehouses") { (response) in
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            
+            let results = try coreDataStack.context.executeFetchRequest(fetchRequest)
+            
+            if (results.count>0) {
+                
+                for obj in results {
+                    let objData : NSManagedObject = obj as! NSManagedObject
+                    coreDataStack.context.deleteObject(objData)
+                }
+                
+                var context : NSManagedObjectContext!
+                
+                context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+                context.persistentStoreCoordinator = coreDataStack.context.persistentStoreCoordinator
+                
+                if self.coreDataStack.context.hasChanges {
+                    do {
+                        try self.coreDataStack.context.save()
+                    } catch {
+                        let nserror = error as NSError
+                        print("Error: \(nserror.localizedDescription)")
+                        abort()
+                    }
+                }
+                
+            }
+            
+            completion(true)
+            
+        } catch let error as NSError {
+            print("Delete all - error : \(error) \(error.userInfo)")
+        }
+        
+    }
+    
+    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, completionModels: (Bool) -> Void) {
+        
+        resetModel("Warehouses") { (response) in
             
             var params = [String: AnyObject]()
             
@@ -110,6 +150,8 @@ public class Global {
                     } catch let error as NSError  {
                         print("Could not save \(error)")
                     }
+                    
+                    completionModels(true)
 
                 }
             }

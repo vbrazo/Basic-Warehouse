@@ -20,10 +20,11 @@ struct CurrentlyInStock {
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
     
+    @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    
+    var timer = NSTimer()
     let global = Global()
     var stock = CurrentlyInStock()
     let managedContext = CoreDataStack().context
@@ -45,13 +46,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: global.screenWidth/2, height: global.screenWidth/2)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 2
-        self.collectionView.collectionViewLayout = layout
-        
         do {
             try self.fetchedResultsController.performFetch()
         } catch {
@@ -59,12 +53,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             print("\(fetchError), \(fetchError.userInfo)")
         }
         
-        global.refresh_models(stock, txtSearch: nil) { (response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.collectionView.reloadData()
-            })
-        }
+        refreshGrid()
         
+    }
+    
+    func resetData(){
+        global.resetModel("Warehouses") { (response) in
+            self.global.resetModel("Tags") { (response) in
+                self.txtSearch.text = nil
+                self.stock.type = .SHOW
+                self.timer.invalidate()
+            }
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: global.screenWidth/2, height: global.screenWidth/2)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 2
+    
+        self.collectionView.collectionViewLayout = layout
+    
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -103,7 +117,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return global.sectionInsets
     }
     
+    func refreshGrid(){
+        global.refresh_models(stock, txtSearch: txtSearch.text!) { (response) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+                self.collectionView.reloadData()
+            })
+        }
+    }
+    
     @IBAction func btnCurrentlyInStock(sender: AnyObject){
+        
         if (stock.type == .SHOW){
             stock.type = .HIDE
             labelInStock.text = "Show items currently in-stock"
@@ -112,11 +136,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             labelInStock.text = "Only Show items currently in-stock"
         }
         
-        global.refresh_models(stock, txtSearch: nil) { (response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.collectionView.reloadData()
-            })
-        }
+        refreshGrid()
         
     }
     
