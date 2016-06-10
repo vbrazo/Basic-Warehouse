@@ -98,22 +98,35 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Eb-Zc-bOw">
-                                <rect key="frame" x="12" y="25" width="576" height="30"/>
+                                <rect key="frame" x="13" y="25" width="543" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbX-Y8-cPH">
+                                <rect key="frame" x="558" y="26" width="35" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="EGx-Yd-M70"/>
+                                    <constraint firstAttribute="width" constant="35" id="QuQ-ve-tKg"/>
+                                </constraints>
+                                <state key="normal" title="Find!" image="ic_search_48px-128"/>
+                                <connections>
+                                    <action selector="btnSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iIf-Qf-oU4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="69k-7a-cXt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-8" id="7zC-Kx-Al1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5Eb-Zc-bOw" secondAttribute="trailing" constant="-8" id="FHB-51-oSY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5Eb-Zc-bOw" secondAttribute="trailing" constant="24" id="FHB-51-oSY"/>
                             <constraint firstAttribute="trailing" secondItem="vTB-3i-gPo" secondAttribute="trailing" id="PCb-fx-jjp"/>
                             <constraint firstItem="69k-7a-cXt" firstAttribute="top" secondItem="5Eb-Zc-bOw" secondAttribute="bottom" constant="8" id="RuY-Cg-jLC"/>
                             <constraint firstItem="DX2-1w-8KM" firstAttribute="leading" secondItem="69k-7a-cXt" secondAttribute="trailing" constant="8" id="S80-VT-7BC"/>
                             <constraint firstItem="5Eb-Zc-bOw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="YRl-Zg-ctb"/>
                             <constraint firstItem="DX2-1w-8KM" firstAttribute="top" secondItem="5Eb-Zc-bOw" secondAttribute="bottom" constant="16" id="ZBu-bY-p2g"/>
+                            <constraint firstItem="qbX-Y8-cPH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="6" id="i3D-Cq-7VZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qbX-Y8-cPH" secondAttribute="trailing" constant="-13" id="lCU-cs-VeB"/>
                             <constraint firstItem="vTB-3i-gPo" firstAttribute="top" secondItem="DX2-1w-8KM" secondAttribute="bottom" constant="16" id="rWT-GO-ulc"/>
-                            <constraint firstItem="5Eb-Zc-bOw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-8" id="wcB-bu-o1N"/>
+                            <constraint firstItem="5Eb-Zc-bOw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-7" id="wcB-bu-o1N"/>
                             <constraint firstItem="vTB-3i-gPo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wh5-r0-qzf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vTB-3i-gPo" secondAttribute="bottom" id="y87-CX-Xkw"/>
                         </constraints>
@@ -130,6 +143,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_search_48px-128" width="128" height="128"/>
         <image name="x-icon" width="25" height="26"/>
     </resources>
 </document>

@@ -24,6 +24,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    
     var timer = NSTimer()
     var refreshControl = UIRefreshControl()
     
@@ -148,6 +149,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         refreshGrid()
         
+    }
+    
+    @IBAction func btnSearch(sender: AnyObject) {
+        refreshGrid()
     }
     
 }
