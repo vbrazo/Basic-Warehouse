@@ -49,14 +49,18 @@ public class GlobalHelper {
                     }
                     
                     if let text = response.text {
+                
                         let fullHash = text.characters.split{$0 == "\n"}.map(String.init)
+                        
                         if fullHash.count > 0 {
                             for i in 0...fullHash.count-1 {
                                 let json = "[\(fullHash[i])]"
                                 results[i] = JSON(json.parseJSONString!)
                             }
                         }
+                  
                         completion(results)
+                    
                     } else {
                         print("got an error")
                         return

@@ -13,6 +13,8 @@ import CoreData
 
 public class ModelHelper {
     
+    var skip = 0
+    
     let global = GlobalHelper()
     let coreDataStack = CoreDataStack()
     
@@ -57,20 +59,16 @@ public class ModelHelper {
         
     }
     
-    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, skip: Int?, completionModels: (Bool) -> Void) {
+    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, completionModels: (Bool) -> Void) {
         
         var params = [String: AnyObject]()
-        
-        params["limit"] = 6
         
         if let text = txtSearch {
             params["q"] = text
         }
         
-        if let skip = skip {
-            params["skip"] = skip
-        }
-        
+        params["limit"] = 6
+        params["skip"] = skip
         params["onlyInStock"] = stock.type.rawValue
         
         self.global.request(ROUTES.search, params: params, headers: nil, type: HTTPTYPE.GET) { (response) in
