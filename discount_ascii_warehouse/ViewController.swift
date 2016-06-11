@@ -23,12 +23,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var loading: UIActivityIndicatorView!
     
     
     var timer = NSTimer()
     var refreshControl = UIRefreshControl()
     
-    let global = Global()
+    let global = GlobalHelper()
     var stock = CurrentlyInStock()
     let managedContext = CoreDataStack().context
     
@@ -51,12 +52,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         refreshGrid()
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-            self.refreshControl.addTarget(self, action: #selector(self.refreshGrid), forControlEvents: UIControlEvents.ValueChanged)
-            self.collectionView.addSubview(self.refreshControl)
-        })
-        
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(self.refreshGrid), forControlEvents: UIControlEvents.ValueChanged)
+        self.collectionView.addSubview(self.refreshControl)
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -97,7 +96,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         cell.lblFace.text = record.face
         cell.lblPrice.text = record.price.description
         
-        if (record.stock==1) {
+        if (record.stock == 1) {
             cell.labelOneMoreInStock.hidden = false
         }
     
@@ -106,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (global.screenWidth-2)/3, height: self.collectionView.frame.height/3)
+        return CGSize(width: (global.screenWidth-2)/3, height: self.collectionView.frame.height/2)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -114,21 +113,36 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func refreshGrid(){
-        global.refresh_models(stock, txtSearch: txtSearch.text!) { (response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
-                do {
-                    try self.fetchedResultsController.performFetch()
-                } catch {
-                    let fetchError = error as NSError
-                    print("\(fetchError), \(fetchError.userInfo)")
-                }
-                self.collectionView.reloadData()
-                if self.refreshControl.refreshing {
-                    self.refreshControl.endRefreshing()
-                }
-            })
+        
+        if !(loading.isAnimating() || self.refreshControl.refreshing) {
+            loading.startAnimating()
+            collectionView.hidden = true
         }
+        
+        global.resetModel("Warehouses") { (response) in
+            self.global.refresh_models(self.stock, txtSearch: self.txtSearch.text!, limit: nil, skip: nil) { (response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+                
+                    do {
+                        try self.fetchedResultsController.performFetch()
+                    } catch {
+                        let fetchError = error as NSError
+                        print("\(fetchError), \(fetchError.userInfo)")
+                    }
+                    
+                    self.collectionView.reloadData()
+                    self.loading.stopAnimating()
+                    self.collectionView.hidden = false
+                    
+                    if self.refreshControl.refreshing {
+                        self.refreshControl.endRefreshing()
+                    }
+                    
+                })
+            }
+        }
+        
     }
     
     func resetData(){
@@ -148,7 +162,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             labelInStock.text = "Show items currently in-stock"
         } else {
             stock.type = .SHOW
-            labelInStock.text = "Only Show items currently in-stock"
+            labelInStock.text = "Show items"
         }
         
         refreshGrid()
