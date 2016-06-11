@@ -19,17 +19,16 @@ struct CurrentlyInStock {
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
-    
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var labelInStock: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loading: UIActivityIndicatorView!
     
-    
     var timer = NSTimer()
     var refreshControl = UIRefreshControl()
     
-    let global = GlobalHelper()
+    let globalHelper = GlobalHelper()
+    let modelHelper = ModelHelper()
     var stock = CurrentlyInStock()
     let managedContext = CoreDataStack().context
     
@@ -64,7 +63,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: global.screenWidth/2, height: self.collectionView.frame.height/3)
+        layout.itemSize = CGSize(width: globalHelper.screenWidth/2, height: self.collectionView.frame.height/3)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 2
     
@@ -105,11 +104,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (global.screenWidth-2)/3, height: self.collectionView.frame.height/2)
+        return CGSize(width: (globalHelper.screenWidth-2)/3, height: self.collectionView.frame.height/2)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return global.sectionInsets
+        return globalHelper.sectionInsets
     }
     
     func refreshGrid(){
@@ -119,8 +118,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             collectionView.hidden = true
         }
         
-        global.resetModel("Warehouses") { (response) in
-            self.global.refresh_models(self.stock, txtSearch: self.txtSearch.text!, limit: nil, skip: nil) { (response) in
+        modelHelper.resetModel("Warehouses") { (response) in
+            self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!, skip: nil) { (response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
                 
@@ -146,8 +145,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func resetData(){
-        global.resetModel("Warehouses") { (response) in
-            self.global.resetModel("Tags") { (response) in
+        modelHelper.resetModel("Warehouses") { (response) in
+            self.modelHelper.resetModel("Tags") { (response) in
                 self.txtSearch.text = nil
                 self.stock.type = .SHOW
                 self.timer.invalidate()

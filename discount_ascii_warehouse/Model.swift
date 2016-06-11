@@ -57,16 +57,14 @@ public class ModelHelper {
         
     }
     
-    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, limit: Int?, skip: Int?, completionModels: (Bool) -> Void) {
+    func refresh_models(stock : CurrentlyInStock, txtSearch: String?, skip: Int?, completionModels: (Bool) -> Void) {
         
         var params = [String: AnyObject]()
         
+        params["limit"] = 6
+        
         if let text = txtSearch {
             params["q"] = text
-        }
-        
-        if let limit = limit {
-            params["limit"] = limit
         }
         
         if let skip = skip {
@@ -89,6 +87,14 @@ public class ModelHelper {
                         warehouse.price = hash["price"].floatValue
                         warehouse.size = Int16(hash["size"].intValue)
                         warehouse.stock = Int16(hash["stock"].intValue)
+                        
+                        if hash["tags"].count > 0 {
+                            for j in 0...hash["tags"].count-1 {
+                                let tag = NSEntityDescription.insertNewObjectForEntityForName("Tags", inManagedObjectContext: self.coreDataStack.context) as! Tag
+                                tag.name = hash["tags"][j]["name"].stringValue
+                            }
+                        }
+                        
                     }
                 }
                 
