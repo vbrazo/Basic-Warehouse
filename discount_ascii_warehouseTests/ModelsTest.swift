@@ -6,12 +6,12 @@
 //  Copyright © 2016 Vitor Oliveira. All rights reserved.
 //
 
+import CoreData
 import discount_ascii_warehouse
 import Foundation
-import UIKit
-import CoreData
-import XCTest
 import SwiftyJSON
+import UIKit
+import XCTest
 
 class discount_ascii_warehouseTests: XCTestCase {
     
@@ -27,6 +27,7 @@ class discount_ascii_warehouseTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         self.coreDataStack = nil
+        self.warehouseService = nil
     }
     
     func testAddWarehouse() {
@@ -38,13 +39,19 @@ class discount_ascii_warehouseTests: XCTestCase {
         let stock = Int16(1)
         let tags : JSON = []
         
-        let warehouse = warehouseService.addWarehouse(uid, face: face, id: id, price: 1.2, size: size, stock: stock, tags: tags)
+        let warehouse = self.warehouseService.addWarehouse(uid, face: face, id: id, price: 1.2, size: size, stock: stock, tags: tags)
         
         XCTAssertNotNil(warehouse, "Warehouse should not be nil")
         XCTAssertNotNil(warehouse?.face, "Camper should not be nil")
         XCTAssertTrue(warehouse?.face == "test")
         XCTAssertTrue(warehouse?.id == "( ⚆ _ ⚆ )")
         
+    }
+    
+    func testResetModels() {
+        self.warehouseService.resetModel("Warehouses") { (response) in
+            XCTAssertTrue(response == true)
+        }
     }
 
 }

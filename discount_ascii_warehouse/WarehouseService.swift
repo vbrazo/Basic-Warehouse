@@ -45,7 +45,7 @@ public class WarehouseService {
         
     }
     
-    func resetModel(entity: String, completion: (Bool) -> Void) {
+    public func resetModel(entity: String, completion: (Bool) -> Void) {
         
         let fetchRequest = NSFetchRequest(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
@@ -72,7 +72,7 @@ public class WarehouseService {
                     } catch {
                         let nserror = error as NSError
                         print("Error: \(nserror.localizedDescription)")
-                        abort()
+                        completion(false)
                     }
                 }
                 
