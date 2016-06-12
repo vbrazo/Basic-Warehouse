@@ -11,10 +11,10 @@ import CoreData
 import SwiftyJSON
 
 public struct CurrentlyInStock {
-    enum Type : Int {
+    enum Type: Int {
         case SHOW = 0, HIDE
     }
-    var type : Type = .SHOW
+    var type: Type = .SHOW
 }
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {

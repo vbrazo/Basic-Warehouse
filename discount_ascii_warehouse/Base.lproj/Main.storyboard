@@ -94,6 +94,7 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69k-7a-cXt">
                                 <rect key="frame" x="12" y="63" width="25" height="29"/>
+                                <accessibility key="accessibilityConfiguration" label="btnCurrentlyInStock"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="CLq-Mg-q34"/>
                                     <constraint firstAttribute="width" constant="25" id="dMr-NK-Hv0"/>
@@ -115,6 +116,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Eb-Zc-bOw">
                                 <rect key="frame" x="13" y="25" width="551" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="txtSearch"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -123,6 +125,7 @@
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbX-Y8-cPH">
                                 <rect key="frame" x="567" y="29" width="29" height="22"/>
+                                <accessibility key="accessibilityConfiguration" label="btnSearch"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="EGx-Yd-M70"/>
                                     <constraint firstAttribute="width" constant="29" id="QuQ-ve-tKg"/>

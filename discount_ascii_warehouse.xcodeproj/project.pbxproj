@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7211C186EEDFF1DCA847E072 /* Pods_discount_ascii_warehouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E558853E84DE1648A20733AE /* Pods_discount_ascii_warehouse.framework */; };
 		ED2CD78F1D0D450A004D6780 /* GlobalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2CD78E1D0D450A004D6780 /* GlobalService.swift */; };
+		ED2CD7981D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2CD7971D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift */; };
 		ED7B0BC51D0A0BEA00272A0E /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B0BC41D0A0BEA00272A0E /* Routes.swift */; };
 		ED7B0BDE1D0CFB9F00272A0E /* ModelsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B0BDD1D0CFB9F00272A0E /* ModelsTest.swift */; };
 		ED7B0BE91D0D014600272A0E /* WarehouseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B0BE81D0D014600272A0E /* WarehouseService.swift */; };
@@ -29,6 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		ED2CD79A1D0D9A2F004D6780 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDAFCBA51CFFA13800E43919 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDAFCBAC1CFFA13800E43919;
+			remoteInfo = discount_ascii_warehouse;
+		};
 		ED7B0BE01D0CFB9F00272A0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EDAFCBA51CFFA13800E43919 /* Project object */;
@@ -43,6 +51,9 @@
 		7C08B6B6907950573D44758E /* Pods-discount_ascii_warehouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-discount_ascii_warehouse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-discount_ascii_warehouse/Pods-discount_ascii_warehouse.debug.xcconfig"; sourceTree = "<group>"; };
 		E558853E84DE1648A20733AE /* Pods_discount_ascii_warehouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_discount_ascii_warehouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2CD78E1D0D450A004D6780 /* GlobalService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalService.swift; sourceTree = "<group>"; };
+		ED2CD7951D0D9A2F004D6780 /* discount_ascii_warehouseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = discount_ascii_warehouseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED2CD7971D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = discount_ascii_warehouseUITests.swift; sourceTree = "<group>"; };
+		ED2CD7991D0D9A2F004D6780 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED7B0BC41D0A0BEA00272A0E /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		ED7B0BD31D0CD99900272A0E /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		ED7B0BDB1D0CFB9F00272A0E /* discount_ascii_warehouseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = discount_ascii_warehouseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +79,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		ED2CD7921D0D9A2F004D6780 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ED7B0BD81D0CFB9F00272A0E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,6 +121,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		ED2CD7961D0D9A2F004D6780 /* discount_ascii_warehouseUITests */ = {
+			isa = PBXGroup;
+			children = (
+				ED2CD7971D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift */,
+				ED2CD7991D0D9A2F004D6780 /* Info.plist */,
+			);
+			path = discount_ascii_warehouseUITests;
+			sourceTree = "<group>";
+		};
 		ED7B0BDC1D0CFB9F00272A0E /* discount_ascii_warehouseTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +155,7 @@
 			children = (
 				EDAFCBAF1CFFA13800E43919 /* discount_ascii_warehouse */,
 				ED7B0BDC1D0CFB9F00272A0E /* discount_ascii_warehouseTests */,
+				ED2CD7961D0D9A2F004D6780 /* discount_ascii_warehouseUITests */,
 				EDAFCBAE1CFFA13800E43919 /* Products */,
 				3BE99D15F6F5268C7399B68E /* Pods */,
 				9CDAE17EDC6811AA7F581D7A /* Frameworks */,
@@ -139,6 +167,7 @@
 			children = (
 				EDAFCBAD1CFFA13800E43919 /* discount_ascii_warehouse.app */,
 				ED7B0BDB1D0CFB9F00272A0E /* discount_ascii_warehouseTests.xctest */,
+				ED2CD7951D0D9A2F004D6780 /* discount_ascii_warehouseUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,6 +262,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		ED2CD7941D0D9A2F004D6780 /* discount_ascii_warehouseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED2CD79C1D0D9A2F004D6780 /* Build configuration list for PBXNativeTarget "discount_ascii_warehouseUITests" */;
+			buildPhases = (
+				ED2CD7911D0D9A2F004D6780 /* Sources */,
+				ED2CD7921D0D9A2F004D6780 /* Frameworks */,
+				ED2CD7931D0D9A2F004D6780 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED2CD79B1D0D9A2F004D6780 /* PBXTargetDependency */,
+			);
+			name = discount_ascii_warehouseUITests;
+			productName = discount_ascii_warehouseUITests;
+			productReference = ED2CD7951D0D9A2F004D6780 /* discount_ascii_warehouseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		ED7B0BDA1D0CFB9F00272A0E /* discount_ascii_warehouseTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED7B0BE21D0CFB9F00272A0E /* Build configuration list for PBXNativeTarget "discount_ascii_warehouseTests" */;
@@ -281,6 +328,10 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Vitor Oliveira";
 				TargetAttributes = {
+					ED2CD7941D0D9A2F004D6780 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = EDAFCBAC1CFFA13800E43919;
+					};
 					ED7B0BDA1D0CFB9F00272A0E = {
 						CreatedOnToolsVersion = 7.3;
 						TestTargetID = EDAFCBAC1CFFA13800E43919;
@@ -305,11 +356,19 @@
 			targets = (
 				EDAFCBAC1CFFA13800E43919 /* discount_ascii_warehouse */,
 				ED7B0BDA1D0CFB9F00272A0E /* discount_ascii_warehouseTests */,
+				ED2CD7941D0D9A2F004D6780 /* discount_ascii_warehouseUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		ED2CD7931D0D9A2F004D6780 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ED7B0BD91D0CFB9F00272A0E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -378,6 +437,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		ED2CD7911D0D9A2F004D6780 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED2CD7981D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ED7B0BD71D0CFB9F00272A0E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -410,6 +477,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		ED2CD79B1D0D9A2F004D6780 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDAFCBAC1CFFA13800E43919 /* discount_ascii_warehouse */;
+			targetProxy = ED2CD79A1D0D9A2F004D6780 /* PBXContainerItemProxy */;
+		};
 		ED7B0BE11D0CFB9F00272A0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EDAFCBAC1CFFA13800E43919 /* discount_ascii_warehouse */;
@@ -437,6 +509,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		ED2CD79D1D0D9A2F004D6780 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = discount_ascii_warehouseUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "myProjects.discount-ascii-warehouseUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = discount_ascii_warehouse;
+			};
+			name = Debug;
+		};
+		ED2CD79E1D0D9A2F004D6780 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = discount_ascii_warehouseUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "myProjects.discount-ascii-warehouseUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = discount_ascii_warehouse;
+			};
+			name = Release;
+		};
 		ED7B0BE31D0CFB9F00272A0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -573,6 +667,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		ED2CD79C1D0D9A2F004D6780 /* Build configuration list for PBXNativeTarget "discount_ascii_warehouseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED2CD79D1D0D9A2F004D6780 /* Debug */,
+				ED2CD79E1D0D9A2F004D6780 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		ED7B0BE21D0CFB9F00272A0E /* Build configuration list for PBXNativeTarget "discount_ascii_warehouseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

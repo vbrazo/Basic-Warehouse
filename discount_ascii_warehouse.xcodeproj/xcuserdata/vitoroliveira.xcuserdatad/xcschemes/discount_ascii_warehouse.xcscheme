@@ -38,6 +38,16 @@
                ReferencedContainer = "container:discount_ascii_warehouse.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ED2CD7941D0D9A2F004D6780"
+               BuildableName = "discount_ascii_warehouseUITests.xctest"
+               BlueprintName = "discount_ascii_warehouseUITests"
+               ReferencedContainer = "container:discount_ascii_warehouse.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

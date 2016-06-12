@@ -8,7 +8,6 @@
 
 import CoreData
 import discount_ascii_warehouse
-import Foundation
 import SwiftyJSON
 import UIKit
 import XCTest
@@ -27,7 +26,7 @@ class discount_ascii_warehouseTests: XCTestCase {
                                             coreDataStack: coreDataStack)
         globalService = GlobalService(managedObjectContext: coreDataStack.context,
                                       coreDataStack: coreDataStack)
-        
+    
     }
 
     override func tearDown() {
@@ -70,9 +69,9 @@ class discount_ascii_warehouseTests: XCTestCase {
         }
     }
     
-    // 
+    //
     // TDD: Core Data - Tag Entity
-    // 
+    //
     
     func testResetTag() {
         self.globalService.reset("Tags") { (response) in
