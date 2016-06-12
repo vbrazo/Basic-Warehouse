@@ -28,6 +28,7 @@
 		EDD4011B1D07ABEF00BD73E6 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4011A1D07ABEF00BD73E6 /* Tag.swift */; };
 		EDD4011D1D07ABFF00BD73E6 /* CDP+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4011C1D07ABFF00BD73E6 /* CDP+Tag.swift */; };
 		EDFB99AD1D0DB75800462904 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFB99AC1D0DB75800462904 /* TagService.swift */; };
+		EDFB99AF1D0DD13F00462904 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFB99AE1D0DD13F00462904 /* MainService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		EDD4011A1D07ABEF00BD73E6 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		EDD4011C1D07ABFF00BD73E6 /* CDP+Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDP+Tag.swift"; sourceTree = "<group>"; };
 		EDFB99AC1D0DB75800462904 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
+		EDFB99AE1D0DD13F00462904 /* MainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,8 +149,9 @@
 			children = (
 				EDD401161D07A99B00BD73E6 /* CoreDataStack.swift */,
 				ED2CD78E1D0D450A004D6780 /* GlobalService.swift */,
-				ED7B0BE81D0D014600272A0E /* WarehouseService.swift */,
+				EDFB99AE1D0DD13F00462904 /* MainService.swift */,
 				EDFB99AC1D0DB75800462904 /* TagService.swift */,
+				ED7B0BE81D0D014600272A0E /* WarehouseService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				EDAFCBD01CFFABE600E43919 /* Grid.swift in Sources */,
 				ED2CD78F1D0D450A004D6780 /* GlobalService.swift in Sources */,
 				EDD4011D1D07ABFF00BD73E6 /* CDP+Tag.swift in Sources */,
+				EDFB99AF1D0DD13F00462904 /* MainService.swift in Sources */,
 				EDD4011B1D07ABEF00BD73E6 /* Tag.swift in Sources */,
 				EDAFCBB91CFFA13800E43919 /* discount_ascii_warehouse.xcdatamodeld in Sources */,
 				EDD401191D07AB8900BD73E6 /* CDP+Warehouse.swift in Sources */,

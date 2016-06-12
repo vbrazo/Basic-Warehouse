@@ -128,6 +128,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        self.startRequest()
         return false
     }
     

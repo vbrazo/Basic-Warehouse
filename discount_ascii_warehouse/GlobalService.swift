@@ -9,15 +9,7 @@
 import CoreData
 import SwiftyJSON
 
-public class GlobalService {
-    
-    private let coreDataStack: CoreDataStack
-    private let context: NSManagedObjectContext
-    
-    public init(context: NSManagedObjectContext, coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
-        self.context = context
-    }
+public class GlobalService: MainService {
     
     public func reset(entity: String, completion: (Bool) -> Void) {
         

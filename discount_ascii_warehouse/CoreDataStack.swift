@@ -23,7 +23,7 @@ public class CoreDataStack {
     }()
     
     public lazy var privateContext: NSManagedObjectContext = {
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.psc
         return managedObjectContext
     }()

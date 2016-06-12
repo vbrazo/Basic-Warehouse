@@ -9,17 +9,8 @@
 import CoreData
 import SwiftyJSON
 
-public class WarehouseService {
-   
-    private let global = GlobalHelper()
-    private let coreDataStack: CoreDataStack
-    private let context: NSManagedObjectContext
-    
-    public init(context: NSManagedObjectContext, coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
-        self.context = context
-    }
-    
+public class WarehouseService: MainService {
+       
     public func add(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON) -> Warehouse? {
         
         let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.context) as! Warehouse
