@@ -10,7 +10,8 @@ import Foundation
 import CoreData
 
 extension Warehouse {
-    
+
+    @NSManaged var uid: Int16
     @NSManaged var id: String
     @NSManaged var face: String
     @NSManaged var price: Float

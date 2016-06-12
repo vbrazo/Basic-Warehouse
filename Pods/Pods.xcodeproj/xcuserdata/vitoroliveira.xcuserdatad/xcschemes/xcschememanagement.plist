@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CCBottomRefreshControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Masonry.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-discount_ascii_warehouse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>6443F8EBA57DB38118EFDBFCF7E4154E</key>
+		<key>1657930304B84232F19A0D421D9E1A8A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DA96E10F64E9C772CF72DE81B5DEFEBA</key>
+		<key>334E3B8C115A91894519538D9AB9BBF5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E9A4C0074E482DAD73AE36259656906D</key>
+		<key>A6C377A0BF8C69CB0F088980522BA705</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DD1559592F5FECF5E008347EC681DF67</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE351046A64FABA9181173C749B994F9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

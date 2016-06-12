@@ -31,6 +31,7 @@
 		E558853E84DE1648A20733AE /* Pods_discount_ascii_warehouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_discount_ascii_warehouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7B0BC41D0A0BEA00272A0E /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		ED7B0BC61D0BC8C500272A0E /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		ED7B0BD31D0CD99900272A0E /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		EDAFCBAD1CFFA13800E43919 /* discount_ascii_warehouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = discount_ascii_warehouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDAFCBB01CFFA13800E43919 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDAFCBB21CFFA13800E43919 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -139,8 +140,9 @@
 			isa = PBXGroup;
 			children = (
 				EDAFCBB01CFFA13800E43919 /* AppDelegate.swift */,
-				EDAFCBB41CFFA13800E43919 /* Main.storyboard */,
+				ED7B0BD31D0CD99900272A0E /* Bridging-Header.h */,
 				EDAFCBBC1CFFA13800E43919 /* LaunchScreen.storyboard */,
+				EDAFCBB41CFFA13800E43919 /* Main.storyboard */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -433,6 +435,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "myProjects.discount-ascii-warehouse";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "discount_ascii_warehouse/Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -445,6 +448,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "myProjects.discount-ascii-warehouse";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "discount_ascii_warehouse/Bridging-Header.h";
 			};
 			name = Release;
 		};

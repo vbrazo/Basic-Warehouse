@@ -84,10 +84,14 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-discount_ascii_warehouse/CCBottomRefreshControl.framework"
+  install_framework "Pods-discount_ascii_warehouse/Masonry.framework"
   install_framework "Pods-discount_ascii_warehouse/SwiftHTTP.framework"
   install_framework "Pods-discount_ascii_warehouse/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-discount_ascii_warehouse/CCBottomRefreshControl.framework"
+  install_framework "Pods-discount_ascii_warehouse/Masonry.framework"
   install_framework "Pods-discount_ascii_warehouse/SwiftHTTP.framework"
   install_framework "Pods-discount_ascii_warehouse/SwiftyJSON.framework"
 fi

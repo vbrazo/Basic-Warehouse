@@ -1,8 +1,12 @@
 PODS:
+  - CCBottomRefreshControl (0.5.1):
+    - Masonry (~> 0.6.2)
+  - Masonry (0.6.4)
   - SwiftHTTP (1.0.5)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
+  - CCBottomRefreshControl
   - SwiftHTTP (~> 1.0.4)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -16,6 +20,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  CCBottomRefreshControl: 57a596348855260f627ffc2b311328ed15b94877
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   SwiftHTTP: edb45e72f27d1d95d328d2b2c16a61aa94f1e9f7
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 

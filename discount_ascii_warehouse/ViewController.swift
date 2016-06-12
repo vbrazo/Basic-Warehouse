@@ -25,7 +25,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var loading: UIActivityIndicatorView!
     
     var timer = NSTimer()
-    var refreshControl = UIRefreshControl()
+    var refreshControlBottom = UIRefreshControl()
     
     let globalHelper = GlobalHelper()
     let modelHelper = ModelHelper()
@@ -36,7 +36,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     lazy var fetchedResultsController : NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Warehouses")
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "uid", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -46,46 +46,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return fetchedResultsController
     }()
     
-    
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        
-        let endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height
-        if (endScrolling >= scrollView.contentSize.height && updatingInfinityScroll == false) {
-            
-            updatingInfinityScroll = true
-            
-            if self.collectionView.frame.origin.y > 0 {
-            
-                self.modelHelper.skip = self.modelHelper.skip + 6
-            
-                self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!){ (finished) in
-                    UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                        if self.collectionView.frame.origin.y < 0 {
-                            self.collectionView.frame.origin.y = self.collectionView.frame.origin.y + 40
-                        }
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.refresh()
-                            self.updatingInfinityScroll = false
-                        })
-                    }, completion: nil)
-                }
-            }
-        }
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         modelHelper.resetModel("Warehouses") { (response) in
-            self.refreshGrid()
+            self.refreshData()
         }
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-            self.refreshControl.addTarget(self, action: #selector(self.refreshGrid), forControlEvents: UIControlEvents.ValueChanged)
-            self.collectionView.addSubview(self.refreshControl)
-        })
+        self.refreshControlBottom.attributedTitle = NSAttributedString(string: "Refreshing")
+        self.refreshControlBottom.addTarget(self, action: #selector(self.refreshData), forControlEvents: UIControlEvents.ValueChanged)
+            
+        self.refreshControlBottom.triggerVerticalOffset = 100
+        self.collectionView.bottomRefreshControl = self.refreshControlBottom
         
     }
     
@@ -124,6 +96,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Warehouse
         
+        print("\(record.uid) - \(record.face) - \(record.price.description)")
+        
         cell.lblFace.text = record.face
         cell.lblPrice.text = record.price.description
         
@@ -143,34 +117,61 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return globalHelper.sectionInsets
     }
     
-    func refreshGrid(){
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
-        if !(loading.isAnimating() || self.refreshControl.refreshing) {
-            self.loading.startAnimating()
-            self.collectionView.hidden = true
-            self.modelHelper.skip = 0
-        } else {
-            modelHelper.resetModel("Warehouses") { (response) in }
-        }
-        
-        self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!) { (response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+        let endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height
+        if (endScrolling >= scrollView.contentSize.height+10 && updatingInfinityScroll == false) {
+            
+            updatingInfinityScroll = true
+            
+            if self.collectionView.frame.origin.y > 0 {
                 
-                self.refresh()
-                self.loading.stopAnimating()
-                self.collectionView.hidden = false
+                self.modelHelper.skip = self.modelHelper.skip + 6
                 
-                if self.refreshControl.refreshing {
-                    self.refreshControl.endRefreshing()
+                self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!){ (finished) in
+                    UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                        if self.collectionView.frame.origin.y < 0 {
+                            self.collectionView.frame.origin.y = self.collectionView.frame.origin.y + 40
+                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.refreshFetchedResults()
+                            self.updatingInfinityScroll = false
+                        })
+                    }, completion: nil)
                 }
-                    
-            })
+            }
         }
         
     }
     
-    func refresh(){
+    func refreshData(){
+        
+       // modelHelper.resetModel("Warehouses") { (response) in
+            self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!) { (response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+            
+                    if self.refreshControlBottom.refreshing {
+                        self.refreshControlBottom.endRefreshing()
+                    }
+                
+                    if self.loading.isAnimating() {
+                        self.loading.stopAnimating()
+                    }
+                
+                    if self.collectionView.hidden == true {
+                        self.collectionView.hidden = false
+                    }
+                
+                    self.refreshFetchedResults()
+            
+                })
+            }
+      //  }
+        
+    }
+    
+    func refreshFetchedResults(){
         do {
             try self.fetchedResultsController.performFetch()
         } catch {
@@ -201,15 +202,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             labelInStock.text = "Show items"
         }
         
-        modelHelper.resetModel("Warehouses") { (response) in
-            self.refreshGrid()
-        }
-        
+        runLoading()
+                
     }
     
     @IBAction func btnSearch(sender: AnyObject) {
+        runLoading()
+    }
+    
+    func runLoading(){
+        self.loading.startAnimating()
+        self.collectionView.hidden = true
+        self.modelHelper.skip = 0
         modelHelper.resetModel("Warehouses") { (response) in
-            self.refreshGrid()
+            self.refreshData()
         }
     }
     

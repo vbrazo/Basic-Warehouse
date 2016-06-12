@@ -67,7 +67,7 @@ public class ModelHelper {
             params["q"] = text
         }
         
-        params["limit"] = 6
+        params["limit"] = 6        
         params["skip"] = skip
         params["onlyInStock"] = stock.type.rawValue
         
@@ -80,6 +80,8 @@ public class ModelHelper {
                     
                     if let info = response[i] {
                         let hash = info[0]
+                        
+                        warehouse.uid = Int16(self.skip+i)
                         warehouse.face = hash["face"].stringValue
                         warehouse.id = hash["id"].stringValue
                         warehouse.price = hash["price"].floatValue
