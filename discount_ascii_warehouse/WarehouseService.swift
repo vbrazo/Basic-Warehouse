@@ -13,16 +13,16 @@ public class WarehouseService {
    
     private let global = GlobalHelper()
     private let coreDataStack: CoreDataStack
-    private let managedObjectContext: NSManagedObjectContext
+    private let context: NSManagedObjectContext
     
-    public init(managedObjectContext: NSManagedObjectContext, coreDataStack: CoreDataStack) {
+    public init(context: NSManagedObjectContext, coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
-        self.managedObjectContext = managedObjectContext
+        self.context = context
     }
     
     public func add(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON) -> Warehouse? {
         
-        let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: managedObjectContext) as! Warehouse
+        let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.context) as! Warehouse
         
         warehouse.uid = uid
         warehouse.face = face
@@ -31,15 +31,15 @@ public class WarehouseService {
         warehouse.size = size
         warehouse.stock = stock
         
+        let tagService = TagService(context: self.context, coreDataStack: self.coreDataStack)
+        
         if tags.count > 0 {
             for j in 0...tags.count-1 {
-                let tag = NSEntityDescription.insertNewObjectForEntityForName("Tags", inManagedObjectContext: self.coreDataStack.context) as! Tag
-                tag.name = tags[j].stringValue
-                warehouse.tag.insert(tag)
+                tagService.add(tags[j].stringValue, warehouse: warehouse)
             }
         }
         
-        self.coreDataStack.saveContext()
+        self.coreDataStack.saveContext(self.context)
         
         return warehouse
         
@@ -62,17 +62,19 @@ public class WarehouseService {
             if response.count > 0 {
                 for i in 0...response.count-1 {
                     if let info = response[i] {
-                        
                         let hash = info[0]
-                        let warehouse = WarehouseService(managedObjectContext: self.coreDataStack.context, coreDataStack: self.coreDataStack)
-                        
-                        warehouse.add(Int16(skip+i), face: hash["face"].stringValue, id: hash["id"].stringValue, price: hash["price"].floatValue, size: Int16(hash["size"].intValue), stock: Int16(hash["stock"].intValue), tags: hash["tags"])
-                        
+                        self.add(Int16(skip+i),
+                                 face: hash["face"].stringValue,
+                                 id: hash["id"].stringValue,
+                                 price: hash["price"].floatValue,
+                                 size: Int16(hash["size"].intValue),
+                                 stock: Int16(hash["stock"].intValue),
+                                 tags: hash["tags"])
                     }
                 }
                 
                 do {
-                    try self.coreDataStack.context.save()
+                    try self.context.save()
                 } catch let error as NSError  {
                     print("Could not save \(error)")
                 }

@@ -12,13 +12,13 @@ import SwiftyJSON
 public class GlobalService {
     
     private let coreDataStack: CoreDataStack
-    private let managedObjectContext: NSManagedObjectContext
+    private let context: NSManagedObjectContext
     
-    public init(managedObjectContext: NSManagedObjectContext, coreDataStack: CoreDataStack) {
+    public init(context: NSManagedObjectContext, coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
-        self.managedObjectContext = managedObjectContext
+        self.context = context
     }
-   
+    
     public func reset(entity: String, completion: (Bool) -> Void) {
         
         let fetchRequest = NSFetchRequest(entityName: entity)
@@ -26,23 +26,18 @@ public class GlobalService {
         
         do {
             
-            let results = try coreDataStack.context.executeFetchRequest(fetchRequest)
+            let results = try self.context.executeFetchRequest(fetchRequest)
             
             if (results.count>0) {
                 
                 for obj in results {
                     let objData : NSManagedObject = obj as! NSManagedObject
-                    coreDataStack.context.deleteObject(objData)
+                    self.context.deleteObject(objData)
                 }
                 
-                var context : NSManagedObjectContext!
-                
-                context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-                context.persistentStoreCoordinator = coreDataStack.context.persistentStoreCoordinator
-                
-                if self.coreDataStack.context.hasChanges {
+                if self.context.hasChanges {
                     do {
-                        try self.coreDataStack.context.save()
+                        try self.context.save()
                     } catch {
                         let nserror = error as NSError
                         print("Error: \(nserror.localizedDescription)")

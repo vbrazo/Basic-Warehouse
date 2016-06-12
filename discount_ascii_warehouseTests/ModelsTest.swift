@@ -21,11 +21,9 @@ class discount_ascii_warehouseTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        coreDataStack = TestCoreDataStack()
-        warehouseService = WarehouseService(managedObjectContext: coreDataStack.context,
-                                            coreDataStack: coreDataStack)
-        globalService = GlobalService(managedObjectContext: coreDataStack.context,
-                                      coreDataStack: coreDataStack)
+        self.coreDataStack = TestCoreDataStack()
+        self.warehouseService = WarehouseService(context: coreDataStack.privateContext, coreDataStack: coreDataStack)
+        self.globalService = GlobalService(context: coreDataStack.privateContext, coreDataStack: coreDataStack)
     
     }
 

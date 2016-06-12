@@ -16,13 +16,19 @@ public class CoreDataStack {
     
     private let modelName = "discount_ascii_warehouse"
     
-    public lazy var context: NSManagedObjectContext = {
+    public lazy var mainContext: NSManagedObjectContext = {
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.psc
         return managedObjectContext
     }()
     
-    public func saveContext() {
+    public lazy var privateContext: NSManagedObjectContext = {
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = self.psc
+        return managedObjectContext
+    }()
+    
+    public func saveContext(context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
                 try context.save()

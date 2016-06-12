@@ -19,11 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
-        coreDataStack.saveContext()
+        self.saveContext()
     }
     
     func applicationWillTerminate(application: UIApplication) {
-        coreDataStack.saveContext()
+        self.saveContext()
+    }
+    
+    func saveContext(){
+        self.coreDataStack.saveContext(coreDataStack.mainContext)
+        self.coreDataStack.saveContext(coreDataStack.privateContext)
     }
     
 }

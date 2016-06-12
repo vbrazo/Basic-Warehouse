@@ -27,6 +27,7 @@
 		EDD401191D07AB8900BD73E6 /* CDP+Warehouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD401181D07AB8900BD73E6 /* CDP+Warehouse.swift */; };
 		EDD4011B1D07ABEF00BD73E6 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4011A1D07ABEF00BD73E6 /* Tag.swift */; };
 		EDD4011D1D07ABFF00BD73E6 /* CDP+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4011C1D07ABFF00BD73E6 /* CDP+Tag.swift */; };
+		EDFB99AD1D0DB75800462904 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFB99AC1D0DB75800462904 /* TagService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		EDD401181D07AB8900BD73E6 /* CDP+Warehouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDP+Warehouse.swift"; sourceTree = "<group>"; };
 		EDD4011A1D07ABEF00BD73E6 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		EDD4011C1D07ABFF00BD73E6 /* CDP+Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDP+Tag.swift"; sourceTree = "<group>"; };
+		EDFB99AC1D0DB75800462904 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				EDD401161D07A99B00BD73E6 /* CoreDataStack.swift */,
 				ED2CD78E1D0D450A004D6780 /* GlobalService.swift */,
 				ED7B0BE81D0D014600272A0E /* WarehouseService.swift */,
+				EDFB99AC1D0DB75800462904 /* TagService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				EDD401171D07A99B00BD73E6 /* CoreDataStack.swift in Sources */,
 				EDD401151D07A8F600BD73E6 /* Warehouse.swift in Sources */,
 				EDAFCBCC1CFFA98B00E43919 /* Global.swift in Sources */,
+				EDFB99AD1D0DB75800462904 /* TagService.swift in Sources */,
 				EDAFCBB31CFFA13800E43919 /* ViewController.swift in Sources */,
 				EDAFCBB11CFFA13800E43919 /* AppDelegate.swift in Sources */,
 				ED7B0BE91D0D014600272A0E /* WarehouseService.swift in Sources */,
@@ -674,6 +678,7 @@
 				ED2CD79E1D0D9A2F004D6780 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ED7B0BE21D0CFB9F00272A0E /* Build configuration list for PBXNativeTarget "discount_ascii_warehouseTests" */ = {
 			isa = XCConfigurationList;

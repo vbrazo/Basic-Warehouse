@@ -32,19 +32,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var stock = CurrentlyInStock()
     let globalHelper = GlobalHelper()
     
-    let globalService = GlobalService(
-        managedObjectContext: CoreDataStack().context,
-        coreDataStack: CoreDataStack())
+    let globalService = GlobalService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
     
-    let warehouseService = WarehouseService(
-                managedObjectContext: CoreDataStack().context,
-                coreDataStack: CoreDataStack())
+    let warehouseService = WarehouseService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
     
     var updatingInfinityScroll = false
     
     lazy var fetchedResultsController : NSFetchedResultsController = {
        
-        let managedContext = CoreDataStack().context
+        let managedContext = CoreDataStack().mainContext
         let fetchRequest = NSFetchRequest(entityName: "Warehouses")
         let sortDescriptor = NSSortDescriptor(key: "uid", ascending: true)
         
