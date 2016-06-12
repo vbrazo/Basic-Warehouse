@@ -106,6 +106,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Only show items currently in-stock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DX2-1w-8KM">
                                 <rect key="frame" x="45" y="71" width="230" height="13"/>
+                                <accessibility key="accessibilityConfiguration" label="labelCurrentlyInStock"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="459-Gg-Hmm"/>
                                     <constraint firstAttribute="height" constant="13" id="ZsX-aO-pHE"/>

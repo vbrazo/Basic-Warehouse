@@ -115,7 +115,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if (record.stock == 1) {
             cell.labelOneMoreInStock.hidden = false
         }
-    
+        
+        cell.lblFace.accessibilityLabel = "lblFace\(indexPath.row)"
+        
         return cell
         
     }
