@@ -17,7 +17,7 @@ public struct CurrentlyInStock {
     var type: Type = .SHOW
 }
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var labelInStock: UILabel!
@@ -64,6 +64,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.globalService.reset("Warehouses") { (response) in
             self.refreshData()
         }
+        
+        self.txtSearch.delegate = self
         
         self.refreshControlBottom.attributedTitle = NSAttributedString(string: "Refreshing")
             
@@ -126,6 +128,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return self.globalHelper.sectionInsets
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
         let endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height
@@ -166,6 +173,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             if response == true {
                 dispatch_async(dispatch_get_main_queue(), {
+                    
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
                     
                     self.refreshFetchedResults()
@@ -173,11 +181,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     if self.collectionView.hidden == true {
                         self.collectionView.hidden = false
                     }
+                    
+                    if self.loading.isAnimating() {
+                        self.loading.stopAnimating()
+                    }
+                    
                 })
-            }
-            
-            if self.loading.isAnimating() {
-                self.loading.stopAnimating()
             }
             
         }
@@ -206,6 +215,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func startRequest(){
+        self.view.endEditing(true)
         self.loading.startAnimating()
         self.collectionView.hidden = true
         self.skip = 0

@@ -118,7 +118,7 @@
                                 <rect key="frame" x="13" y="25" width="551" height="30"/>
                                 <accessibility key="accessibilityConfiguration" label="txtSearch"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ovQ-ON-Rp1">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>

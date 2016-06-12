@@ -9,11 +9,13 @@
 import XCTest
 
 class discount_ascii_warehouseUITests: XCTestCase {
-        
+    
+    let app = XCUIApplication()
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
-        XCUIApplication().launch()
+        app.launch()
     }
     
     override func tearDown() {
@@ -22,7 +24,22 @@ class discount_ascii_warehouseUITests: XCTestCase {
     
     func testInitialStateIsCorrect() {
         let collections = XCUIApplication().collectionViews
-        XCTAssertEqual(collections.count, 1, "There should be 1 object initially")
+        XCTAssertEqual(collections.count, 1, "There should be 1 collectionView initially")
+    }
+    
+    func testUserFilterAndSearch(){
+        
+        sleep(2)
+        
+        let textField = app.textFields["txtSearch"]
+        
+        textField.tap()
+        textField.typeText("amet bored flat")
+        
+        app.buttons["btnSearch"].tap()
+        
+        sleep(4)
+        
     }
 
 }
