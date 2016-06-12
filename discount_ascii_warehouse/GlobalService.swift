@@ -6,9 +6,7 @@
 //  Copyright © 2016 Vitor Oliveira. All rights reserved.
 //
 
-
 import CoreData
-import Foundation
 import SwiftyJSON
 
 public class GlobalService {

@@ -6,7 +6,6 @@
 //  Copyright © 2016 Vitor Oliveira. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 public extension Tag {

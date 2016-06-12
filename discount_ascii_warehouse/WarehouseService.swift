@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Foundation
 import SwiftyJSON
 
 public class WarehouseService {
