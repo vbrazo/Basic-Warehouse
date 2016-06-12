@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
-struct CurrentlyInStock {
+public struct CurrentlyInStock {
     enum Type : Int {
         case SHOW = 0, HIDE
     }
@@ -24,12 +24,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loading: UIActivityIndicatorView!
     
+    var skip = 0
+    
     var timer = NSTimer()
     var refreshControlBottom = UIRefreshControl()
     
     var stock = CurrentlyInStock()
-    let serviceManager = ServiceManager()
     let globalHelper = GlobalHelper()
+    
+    let globalService = GlobalService(
+        managedObjectContext: CoreDataStack().context,
+        coreDataStack: CoreDataStack())
     
     let warehouseService = WarehouseService(
                 managedObjectContext: CoreDataStack().context,
@@ -56,12 +61,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.warehouseService.resetModel("Warehouses") { (response) in
+        self.globalService.reset("Warehouses") { (response) in
             self.refreshData()
         }
         
         self.refreshControlBottom.attributedTitle = NSAttributedString(string: "Refreshing")
-        self.refreshControlBottom.addTarget(self, action: #selector(self.refreshData), forControlEvents: UIControlEvents.ValueChanged)
             
         self.refreshControlBottom.triggerVerticalOffset = 100
         self.collectionView.bottomRefreshControl = self.refreshControlBottom
@@ -74,7 +78,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: globalHelper.screenWidth/2, height: self.collectionView.frame.height/3)
+        layout.itemSize = CGSize(width: self.globalHelper.screenWidth/2, height: self.collectionView.frame.height/3)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 2
         
@@ -83,14 +87,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        if let sections = fetchedResultsController.sections {
+        if let sections = self.fetchedResultsController.sections {
             return sections.count
         }
         return 0
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let sections = fetchedResultsController.sections {
+        if let sections = self.fetchedResultsController.sections {
             let sectionInfo = sections[section]
             return sectionInfo.numberOfObjects
         }
@@ -101,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Grid", forIndexPath: indexPath) as! CollectionsGrid
         
-        let record = fetchedResultsController.objectAtIndexPath(indexPath) as! Warehouse
+        let record = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Warehouse
         
         cell.lblFace.text = record.face
         cell.lblPrice.text = record.price.description
@@ -125,25 +129,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
         let endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height
-        if (endScrolling >= scrollView.contentSize.height+10 && updatingInfinityScroll == false) {
+        if (endScrolling >= scrollView.contentSize.height+15 && self.updatingInfinityScroll == false) {
             
             self.updatingInfinityScroll = true
             
             if self.collectionView.frame.origin.y > 0 {
                 
-                self.serviceManager.skip = self.serviceManager.skip + 6
+                self.skip = self.skip + 6
                 
-                self.serviceManager.refresh_models(self.stock, txtSearch: self.txtSearch.text!){ (finished) in
+                self.warehouseService.refresh(self.stock, txtSearch: self.txtSearch.text!, skip: self.skip){ (finished) in
                     UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                        
                         if self.collectionView.frame.origin.y < 0 {
                             self.collectionView.frame.origin.y = self.collectionView.frame.origin.y + 40
                         }
+                        
                         dispatch_async(dispatch_get_main_queue(), {
                             self.refreshFetchedResults()
                             self.updatingInfinityScroll = false
+                            if self.refreshControlBottom.refreshing {
+                                self.refreshControlBottom.endRefreshing()
+                            }
                         })
+                        
                     }, completion: nil)
                 }
+                
             }
         }
         
@@ -151,31 +162,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func refreshData(){
         
-        self.serviceManager.refresh_models(self.stock, txtSearch: self.txtSearch.text!) { (response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+        self.warehouseService.refresh(self.stock, txtSearch: self.txtSearch.text!, skip: self.skip) { (response) in
             
-                if self.refreshControlBottom.refreshing {
-                    self.refreshControlBottom.endRefreshing()
-                }
+            if response == true {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
+                    
+                    self.refreshFetchedResults()
+                    
+                    if self.collectionView.hidden == true {
+                        self.collectionView.hidden = false
+                    }
+                })
+            }
             
-                if self.loading.isAnimating() {
-                    self.loading.stopAnimating()
-                }
+            if self.loading.isAnimating() {
+                self.loading.stopAnimating()
+            }
             
-                if self.collectionView.hidden == true {
-                    self.collectionView.hidden = false
-                }
-            
-                self.refreshFetchedResults()
-            })
         }
         
     }
     
     func resetData(){
-        self.warehouseService.resetModel("Warehouses") { (response) in
-            self.warehouseService.resetModel("Tags") { (response) in
+        self.globalService.reset("Warehouses") { (response) in
+            self.globalService.reset("Tags") { (response) in
                 self.txtSearch.text = nil
                 self.stock.type = .SHOW
                 self.timer.invalidate()
@@ -194,11 +205,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.collectionView.reloadData()
     }
     
-    func runLoading(){
+    func startRequest(){
         self.loading.startAnimating()
         self.collectionView.hidden = true
-        self.serviceManager.skip = 0
-        self.warehouseService.resetModel("Warehouses") { (response) in
+        self.skip = 0
+        self.globalService.reset("Warehouses") { (response) in
             self.refreshData()
         }
     }
@@ -213,12 +224,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.labelInStock.text = "Show items"
         }
         
-        self.runLoading()
+        self.startRequest()
                 
     }
     
     @IBAction func btnSearch(sender: AnyObject) {
-        self.runLoading()
+        self.startRequest()
     }
 
 }

@@ -12,15 +12,16 @@ import SwiftyJSON
 
 public class WarehouseService {
    
-    let managedObjectContext: NSManagedObjectContext
-    let coreDataStack: CoreDataStack
+    private let global = GlobalHelper()
+    private let coreDataStack: CoreDataStack
+    private let managedObjectContext: NSManagedObjectContext
     
     public init(managedObjectContext: NSManagedObjectContext, coreDataStack: CoreDataStack) {
-        self.managedObjectContext = managedObjectContext
         self.coreDataStack = coreDataStack
+        self.managedObjectContext = managedObjectContext
     }
     
-    public func addWarehouse(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON) -> Warehouse? {
+    public func add(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON) -> Warehouse? {
         
         let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: managedObjectContext) as! Warehouse
         
@@ -39,51 +40,51 @@ public class WarehouseService {
             }
         }
         
-        coreDataStack.saveContext()
+        self.coreDataStack.saveContext()
         
         return warehouse
         
     }
     
-    public func resetModel(entity: String, completion: (Bool) -> Void) {
+    public func refresh(stock: CurrentlyInStock, txtSearch: String?, skip: Int, completionModels: (Bool) -> Void) {
         
-        let fetchRequest = NSFetchRequest(entityName: entity)
-        fetchRequest.returnsObjectsAsFaults = false
+        var params = [String: AnyObject]()
         
-        do {
+        if let text = txtSearch {
+            params["q"] = text
+        }
+        
+        params["limit"] = 6
+        params["skip"] = skip
+        params["onlyInStock"] = stock.type.rawValue
+        
+        self.global.request(ROUTES.search, params: params, headers: nil, type: HTTPTYPE.GET) { (response) in
             
-            let results = try coreDataStack.context.executeFetchRequest(fetchRequest)
-            
-            if (results.count>0) {
-                
-                for obj in results {
-                    let objData : NSManagedObject = obj as! NSManagedObject
-                    coreDataStack.context.deleteObject(objData)
-                }
-                
-                var context : NSManagedObjectContext!
-                
-                context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-                context.persistentStoreCoordinator = coreDataStack.context.persistentStoreCoordinator
-                
-                if self.coreDataStack.context.hasChanges {
-                    do {
-                        try self.coreDataStack.context.save()
-                    } catch {
-                        let nserror = error as NSError
-                        print("Error: \(nserror.localizedDescription)")
-                        completion(false)
+            if response.count > 0 {
+                for i in 0...response.count-1 {
+                    if let info = response[i] {
+                        
+                        let hash = info[0]
+                        let warehouse = WarehouseService(managedObjectContext: self.coreDataStack.context, coreDataStack: self.coreDataStack)
+                        
+                        warehouse.add(Int16(skip+i), face: hash["face"].stringValue, id: hash["id"].stringValue, price: hash["price"].floatValue, size: Int16(hash["size"].intValue), stock: Int16(hash["stock"].intValue), tags: hash["tags"])
+                        
                     }
                 }
                 
+                do {
+                    try self.coreDataStack.context.save()
+                } catch let error as NSError  {
+                    print("Could not save \(error)")
+                }
+                
+                completionModels(true)
+                
+            } else {
+                completionModels(false)
             }
             
-            completion(true)
-            
-        } catch let error as NSError {
-            print("Delete all - error : \(error) \(error.userInfo)")
         }
-        
     }
     
 }

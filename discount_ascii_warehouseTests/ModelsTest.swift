@@ -16,12 +16,18 @@ import XCTest
 class discount_ascii_warehouseTests: XCTestCase {
     
     var coreDataStack : CoreDataStack!
+    var globalService : GlobalService!
     var warehouseService: WarehouseService!
     
     override func setUp() {
         super.setUp()
+        
         coreDataStack = TestCoreDataStack()
-        warehouseService = WarehouseService(managedObjectContext: coreDataStack.context, coreDataStack: coreDataStack)
+        warehouseService = WarehouseService(managedObjectContext: coreDataStack.context,
+                                            coreDataStack: coreDataStack)
+        globalService = GlobalService(managedObjectContext: coreDataStack.context,
+                                      coreDataStack: coreDataStack)
+        
     }
 
     override func tearDown() {
@@ -29,6 +35,10 @@ class discount_ascii_warehouseTests: XCTestCase {
         self.coreDataStack = nil
         self.warehouseService = nil
     }
+    
+    //
+    // TDD: Core Data - Warehouse Entity
+    //
     
     func testAddWarehouse() {
         
@@ -39,7 +49,13 @@ class discount_ascii_warehouseTests: XCTestCase {
         let stock = Int16(1)
         let tags : JSON = []
         
-        let warehouse = self.warehouseService.addWarehouse(uid, face: face, id: id, price: 1.2, size: size, stock: stock, tags: tags)
+        let warehouse = self.warehouseService.add(uid,
+                                                  face: face,
+                                                  id: id,
+                                                  price: 1.2,
+                                                  size: size,
+                                                  stock: stock,
+                                                  tags: tags)
         
         XCTAssertNotNil(warehouse, "Warehouse should not be nil")
         XCTAssertNotNil(warehouse?.face, "Camper should not be nil")
@@ -48,8 +64,18 @@ class discount_ascii_warehouseTests: XCTestCase {
         
     }
     
-    func testResetModels() {
-        self.warehouseService.resetModel("Warehouses") { (response) in
+    func testResetWarehouse() {
+        self.globalService.reset("Warehouses") { (response) in
+            XCTAssertTrue(response == true)
+        }
+    }
+    
+    // 
+    // TDD: Core Data - Tag Entity
+    // 
+    
+    func testResetTag() {
+        self.globalService.reset("Tags") { (response) in
             XCTAssertTrue(response == true)
         }
     }

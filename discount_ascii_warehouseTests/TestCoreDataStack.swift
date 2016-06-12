@@ -6,7 +6,6 @@
 //  Copyright © 2016 Vitor Oliveira. All rights reserved.
 //
 
-
 import Foundation
 import CoreData
 import discount_ascii_warehouse
@@ -19,8 +18,10 @@ class TestCoreDataStack: CoreDataStack {
             
             do {
                 try psc.addPersistentStoreWithType(
-                    NSInMemoryStoreType, configuration: nil,
-                    URL: nil, options: nil)
+                                NSInMemoryStoreType,
+                                configuration: nil,
+                                URL: nil,
+                                options: nil)
             } catch {
                 fatalError()
             }

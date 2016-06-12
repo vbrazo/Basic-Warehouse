@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import CoreData
 import SwiftHTTP
 import SwiftyJSON
-import CoreData
 
 enum HTTPTYPE {
     case GET, PUT, DELETE, POST
@@ -28,7 +28,7 @@ public class GlobalHelper {
             do {
                 
                 var opt : HTTP!
-                var results : Dictionary<Int,JSON> = [:]
+                var results : Dictionary<Int,JSON>=[:]
                 
                 switch type {
                     case .GET:
