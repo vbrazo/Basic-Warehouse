@@ -79,6 +79,7 @@ public class ModelHelper {
                     let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.coreDataStack.context) as! Warehouse
                     
                     if let info = response[i] {
+                        
                         let hash = info[0]
                         
                         warehouse.uid = Int16(self.skip+i)
@@ -91,7 +92,8 @@ public class ModelHelper {
                         if hash["tags"].count > 0 {
                             for j in 0...hash["tags"].count-1 {
                                 let tag = NSEntityDescription.insertNewObjectForEntityForName("Tags", inManagedObjectContext: self.coreDataStack.context) as! Tag
-                                tag.name = hash["tags"][j]["name"].stringValue
+                                tag.name = hash["tags"][j].stringValue
+                                warehouse.tag.insert(tag)
                             }
                         }
                         
