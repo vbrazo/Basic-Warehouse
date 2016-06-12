@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 @objc(Warehouse)
-class Warehouse: NSManagedObject {
+public class Warehouse: NSManagedObject {
     
 }

@@ -11,8 +11,8 @@ import SwiftHTTP
 import SwiftyJSON
 import CoreData
 
-public class ModelHelper {
-    
+public class ServiceManager {
+     
     var skip = 0
     
     let global = GlobalHelper()

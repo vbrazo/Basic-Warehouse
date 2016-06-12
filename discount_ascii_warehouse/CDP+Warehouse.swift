@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-extension Warehouse {
+public extension Warehouse {
 
     @NSManaged var uid: Int16
     @NSManaged var id: String

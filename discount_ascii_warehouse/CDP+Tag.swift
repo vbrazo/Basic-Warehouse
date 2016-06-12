@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-extension Tag {
+public extension Tag {
     
     @NSManaged var name: String
     
