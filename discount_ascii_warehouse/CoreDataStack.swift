@@ -8,7 +8,7 @@
 
 import CoreData
 
-class CoreDataStack {
+public class CoreDataStack {
         
     let modelName = "discount_ascii_warehouse"
     
