@@ -6,34 +6,45 @@
 //  Copyright © 2016 Vitor Oliveira. All rights reserved.
 //
 
+import discount_ascii_warehouse
+import Foundation
 import UIKit
-import XCTest
 import CoreData
+import XCTest
+import SwiftyJSON
 
 class discount_ascii_warehouseTests: XCTestCase {
     
-    var coreDataStack: CoreDataStack!
+    var coreDataStack : CoreDataStack!
+    var warehouseService: WarehouseService!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        coreDataStack = TestCoreDataStack()
+        warehouseService = WarehouseService(managedObjectContext: coreDataStack.context, coreDataStack: coreDataStack)
     }
-    
+
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        self.coreDataStack = nil
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testAddWarehouse() {
+        
+        let uid = Int16(1)
+        let face = "test"
+        let id = "( ⚆ _ ⚆ )"
+        let size = Int16(1)
+        let stock = Int16(1)
+        let tags : JSON = []
+        
+        let warehouse = warehouseService.addWarehouse(uid, face: face, id: id, price: 1.2, size: size, stock: stock, tags: tags)
+        
+        XCTAssertNotNil(warehouse, "Warehouse should not be nil")
+        XCTAssertNotNil(warehouse?.face, "Camper should not be nil")
+        XCTAssertTrue(warehouse?.face == "test")
+        XCTAssertTrue(warehouse?.id == "( ⚆ _ ⚆ )")
+        
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
+
 }

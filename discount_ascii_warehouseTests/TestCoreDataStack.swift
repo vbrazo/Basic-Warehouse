@@ -6,4 +6,26 @@
 //  Copyright © 2016 Vitor Oliveira. All rights reserved.
 //
 
+
 import Foundation
+import CoreData
+import discount_ascii_warehouse
+
+class TestCoreDataStack: CoreDataStack {
+    override init() {
+        super.init()
+        self.psc = {
+            let psc = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+            
+            do {
+                try psc.addPersistentStoreWithType(
+                    NSInMemoryStoreType, configuration: nil,
+                    URL: nil, options: nil)
+            } catch {
+                fatalError()
+            }
+            
+            return psc
+        }()
+    }
+}

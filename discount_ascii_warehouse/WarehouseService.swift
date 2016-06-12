@@ -20,7 +20,7 @@ public class WarehouseService {
         self.coreDataStack = coreDataStack
     }
     
-    public func addWarehouse(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON){
+    public func addWarehouse(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON) -> Warehouse? {
         
         let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: managedObjectContext) as! Warehouse
         
@@ -40,6 +40,8 @@ public class WarehouseService {
         }
         
         coreDataStack.saveContext()
+        
+        return warehouse
         
     }
     

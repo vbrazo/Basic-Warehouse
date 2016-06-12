@@ -28,28 +28,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var refreshControlBottom = UIRefreshControl()
     
     var stock = CurrentlyInStock()
-    let modelHelper = ModelHelper()
+    let serviceManager = ServiceManager()
     let globalHelper = GlobalHelper()
-    let managedContext = CoreDataStack().context
+    
+    let warehouseService = WarehouseService(
+                managedObjectContext: CoreDataStack().context,
+                coreDataStack: CoreDataStack())
     
     var updatingInfinityScroll = false
     
     lazy var fetchedResultsController : NSFetchedResultsController = {
+       
+        let managedContext = CoreDataStack().context
         let fetchRequest = NSFetchRequest(entityName: "Warehouses")
         let sortDescriptor = NSSortDescriptor(key: "uid", ascending: true)
+        
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
+        
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.modelHelper.resetModel("Warehouses") { (response) in
+        self.warehouseService.resetModel("Warehouses") { (response) in
             self.refreshData()
         }
         
@@ -124,9 +131,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             if self.collectionView.frame.origin.y > 0 {
                 
-                self.modelHelper.skip = self.modelHelper.skip + 6
+                self.serviceManager.skip = self.serviceManager.skip + 6
                 
-                self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!){ (finished) in
+                self.serviceManager.refresh_models(self.stock, txtSearch: self.txtSearch.text!){ (finished) in
                     UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                         if self.collectionView.frame.origin.y < 0 {
                             self.collectionView.frame.origin.y = self.collectionView.frame.origin.y + 40
@@ -144,7 +151,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func refreshData(){
         
-        self.modelHelper.refresh_models(self.stock, txtSearch: self.txtSearch.text!) { (response) in
+        self.serviceManager.refresh_models(self.stock, txtSearch: self.txtSearch.text!) { (response) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.timer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(self.resetData), userInfo: nil, repeats: false)
             
@@ -167,8 +174,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func resetData(){
-        self.modelHelper.resetModel("Warehouses") { (response) in
-            self.modelHelper.resetModel("Tags") { (response) in
+        self.warehouseService.resetModel("Warehouses") { (response) in
+            self.warehouseService.resetModel("Tags") { (response) in
                 self.txtSearch.text = nil
                 self.stock.type = .SHOW
                 self.timer.invalidate()
@@ -190,8 +197,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func runLoading(){
         self.loading.startAnimating()
         self.collectionView.hidden = true
-        self.modelHelper.skip = 0
-        self.modelHelper.resetModel("Warehouses") { (response) in
+        self.serviceManager.skip = 0
+        self.warehouseService.resetModel("Warehouses") { (response) in
             self.refreshData()
         }
     }
