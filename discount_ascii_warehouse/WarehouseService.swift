@@ -64,11 +64,7 @@ public class WarehouseService: MainService {
                     }
                 }
                 
-                do {
-                    try self.context.save()
-                } catch let error as NSError  {
-                    print("Could not save \(error)")
-                }
+                self.coreDataStack.saveContext(self.context)
                 
                 completionModels(true)
                 

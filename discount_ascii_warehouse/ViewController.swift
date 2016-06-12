@@ -31,9 +31,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     var stock = CurrentlyInStock()
     let globalHelper = GlobalHelper()
-    
-    let globalService = GlobalService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
-    
+
+    let tagService = TagService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
     let warehouseService = WarehouseService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
     
     var updatingInfinityScroll = false
@@ -57,7 +56,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.globalService.reset("Warehouses") { (response) in
+        self.warehouseService.reset("Warehouses") { (response) in
             self.refreshData()
         }
         
@@ -193,8 +192,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func resetData(){
-        self.globalService.reset("Warehouses") { (response) in
-            self.globalService.reset("Tags") { (response) in
+        self.warehouseService.reset("Warehouses") { (response) in
+            self.tagService.reset("Tags") { (response) in
                 self.txtSearch.text = nil
                 self.stock.type = .SHOW
                 self.timer.invalidate()
@@ -218,7 +217,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.loading.startAnimating()
         self.collectionView.hidden = true
         self.skip = 0
-        self.globalService.reset("Warehouses") { (response) in
+        self.warehouseService.reset("Warehouses") { (response) in
             self.refreshData()
         }
     }

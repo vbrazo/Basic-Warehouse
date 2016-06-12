@@ -15,16 +15,16 @@ import XCTest
 class discount_ascii_warehouseTests: XCTestCase {
     
     var coreDataStack : CoreDataStack!
-    var globalService : GlobalService!
-    var warehouseService: WarehouseService!
+    var tagService: TagService!
+    var warehouseService : WarehouseService!
     
     override func setUp() {
         super.setUp()
         
         self.coreDataStack = TestCoreDataStack()
         self.warehouseService = WarehouseService(context: coreDataStack.privateContext, coreDataStack: coreDataStack)
-        self.globalService = GlobalService(context: coreDataStack.privateContext, coreDataStack: coreDataStack)
-    
+        self.tagService = TagService(context: coreDataStack.privateContext, coreDataStack: coreDataStack)
+
     }
 
     override func tearDown() {
@@ -62,7 +62,7 @@ class discount_ascii_warehouseTests: XCTestCase {
     }
     
     func testResetWarehouse() {
-        self.globalService.reset("Warehouses") { (response) in
+        self.warehouseService.reset("Warehouses") { (response) in
             XCTAssertTrue(response == true)
         }
     }
@@ -72,7 +72,7 @@ class discount_ascii_warehouseTests: XCTestCase {
     //
     
     func testResetTag() {
-        self.globalService.reset("Tags") { (response) in
+        self.tagService.reset("Tags") { (response) in
             XCTAssertTrue(response == true)
         }
     }

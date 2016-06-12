@@ -20,4 +20,32 @@ public class MainService {
         self.coreDataStack = coreDataStack
     }
     
+    public func reset(entity: String, completion: (Bool) -> Void) {
+        
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            
+            let results = try self.context.executeFetchRequest(fetchRequest)
+            
+            if (results.count>0) {
+                
+                for obj in results {
+                    let objData : NSManagedObject = obj as! NSManagedObject
+                    self.context.deleteObject(objData)
+                }
+                
+                self.coreDataStack.saveContext(self.context)
+                
+            }
+            
+            completion(true)
+            
+        } catch let error as NSError {
+            print("Delete all - error : \(error) \(error.userInfo)")
+        }
+        
+    }
+    
 }
