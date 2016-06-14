@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7211C186EEDFF1DCA847E072 /* Pods_discount_ascii_warehouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E558853E84DE1648A20733AE /* Pods_discount_ascii_warehouse.framework */; };
+		ED12A62E1D0FBC7200AB0A3F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = ED12A62D1D0FBC7200AB0A3F /* README.md */; };
 		ED2CD7981D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2CD7971D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift */; };
 		ED7B0BC51D0A0BEA00272A0E /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B0BC41D0A0BEA00272A0E /* Routes.swift */; };
 		ED7B0BDE1D0CFB9F00272A0E /* ModelsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B0BDD1D0CFB9F00272A0E /* ModelsTest.swift */; };
@@ -51,6 +52,7 @@
 		062EB4031646629BDC649573 /* Pods-discount_ascii_warehouse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-discount_ascii_warehouse.release.xcconfig"; path = "Pods/Target Support Files/Pods-discount_ascii_warehouse/Pods-discount_ascii_warehouse.release.xcconfig"; sourceTree = "<group>"; };
 		7C08B6B6907950573D44758E /* Pods-discount_ascii_warehouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-discount_ascii_warehouse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-discount_ascii_warehouse/Pods-discount_ascii_warehouse.debug.xcconfig"; sourceTree = "<group>"; };
 		E558853E84DE1648A20733AE /* Pods_discount_ascii_warehouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_discount_ascii_warehouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED12A62D1D0FBC7200AB0A3F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ED2CD7951D0D9A2F004D6780 /* discount_ascii_warehouseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = discount_ascii_warehouseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2CD7971D0D9A2F004D6780 /* discount_ascii_warehouseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = discount_ascii_warehouseUITests.swift; sourceTree = "<group>"; };
 		ED2CD7991D0D9A2F004D6780 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				ED7B0BD31D0CD99900272A0E /* Bridging-Header.h */,
 				EDAFCBBC1CFFA13800E43919 /* LaunchScreen.storyboard */,
 				EDAFCBB41CFFA13800E43919 /* Main.storyboard */,
+				ED12A62D1D0FBC7200AB0A3F /* README.md */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				EDD4011D1D07ABFF00BD73E6 /* CDP+Tag.swift in Sources */,
 				EDFB99AF1D0DD13F00462904 /* MainService.swift in Sources */,
 				EDD4011B1D07ABEF00BD73E6 /* Tag.swift in Sources */,
+				ED12A62E1D0FBC7200AB0A3F /* README.md in Sources */,
 				EDAFCBB91CFFA13800E43919 /* discount_ascii_warehouse.xcdatamodeld in Sources */,
 				EDD401191D07AB8900BD73E6 /* CDP+Warehouse.swift in Sources */,
 			);

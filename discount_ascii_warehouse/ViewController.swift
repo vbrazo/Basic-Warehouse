@@ -17,7 +17,7 @@ public struct CurrentlyInStock {
     var type: Type = .SHOW
 }
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var labelInStock: UILabel!
@@ -32,8 +32,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var stock = CurrentlyInStock()
     let globalHelper = GlobalHelper()
 
-    let tagService = TagService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
-    let warehouseService = WarehouseService(context: CoreDataStack().privateContext, coreDataStack: CoreDataStack())
+    let tagService = TagService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
+    let warehouseService = WarehouseService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
     
     var updatingInfinityScroll = false
     
@@ -81,48 +81,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         self.collectionView.collectionViewLayout = layout
         
-    }
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        if let sections = self.fetchedResultsController.sections {
-            return sections.count
-        }
-        return 0
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let sections = self.fetchedResultsController.sections {
-            let sectionInfo = sections[section]
-            return sectionInfo.numberOfObjects
-        }
-        return 0
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Grid", forIndexPath: indexPath) as! CollectionsGrid
-        
-        let record = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Warehouse
-        
-        cell.lblFace.text = record.face
-        cell.lblPrice.text = record.price.description
-        
-        if (record.stock == 1) {
-            cell.labelOneMoreInStock.hidden = false
-        }
-        
-        cell.lblFace.accessibilityLabel = "lblFace\(indexPath.row)"
-        
-        return cell
-        
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (self.globalHelper.screenWidth-2)/3, height: self.collectionView.frame.height/2)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return self.globalHelper.sectionInsets
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -240,4 +198,51 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         self.startRequest()
     }
 
+}
+
+
+extension ViewController: UICollectionViewDataSource {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        if let sections = self.fetchedResultsController.sections {
+            return sections.count
+        }
+        return 0
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let sections = self.fetchedResultsController.sections {
+            let sectionInfo = sections[section]
+            return sectionInfo.numberOfObjects
+        }
+        return 0
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Grid", forIndexPath: indexPath) as! CollectionsGrid
+        
+        let record = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Warehouse
+        
+        cell.lblFace.text = record.face
+        cell.lblPrice.text = record.price.description
+        
+        if (record.stock == 1) {
+            cell.labelOneMoreInStock.hidden = false
+        }
+        
+        cell.lblFace.accessibilityLabel = "lblFace\(indexPath.row)"
+        
+        return cell
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: (self.globalHelper.screenWidth-2)/3, height: self.collectionView.frame.height/2)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return self.globalHelper.sectionInsets
+    }
+    
 }

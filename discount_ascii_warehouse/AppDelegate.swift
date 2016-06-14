@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveContext(){
         self.coreDataStack.saveContext(coreDataStack.mainContext)
-        self.coreDataStack.saveContext(coreDataStack.privateContext)
     }
     
 }
