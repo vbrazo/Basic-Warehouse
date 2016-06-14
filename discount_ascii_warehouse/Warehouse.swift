@@ -22,7 +22,6 @@ public class Warehouse: NSManagedObject {
         var error: NSError? = nil;
         
         if let first = value.memory as? String {
-            print(first)
             if first == "" {
                 let errorType = UserErrorType.InvalidFace
                 error = NSError(domain: errorDomain, code: errorType.rawValue, userInfo: [ NSLocalizedDescriptionKey : "The face cannot be empty." ] )

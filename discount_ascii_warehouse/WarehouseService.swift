@@ -32,12 +32,11 @@ public class WarehouseService: MainService {
         
         do {
             try warehouse.validateForInsert()
+            self.coreDataStack.saveContext(self.context)
         } catch {
             let validationError = error as NSError
             print(validationError)
         }
-        
-        self.coreDataStack.saveContext(self.context)
         
         return warehouse
         
@@ -70,8 +69,6 @@ public class WarehouseService: MainService {
                                  tags: hash["tags"])
                     }
                 }
-                
-                self.coreDataStack.saveContext(self.context)
                 
                 completionModels(true)
                 
