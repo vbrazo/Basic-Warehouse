@@ -38,8 +38,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var stock = CurrentlyInStock()
     let globalHelper = GlobalHelper()
     
-    let tagService = TagService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
-    let warehouseService = WarehouseService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
+    let tagService = TagService(context: CoreDataStack().newPrivateQueueContext(), coreDataStack: CoreDataStack())
+    let warehouseService = WarehouseService(context: CoreDataStack().newPrivateQueueContext(), coreDataStack: CoreDataStack())
     
     lazy var fetchedResultsController : NSFetchedResultsController = {
         
@@ -119,7 +119,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             }
                         })
                         
-                        }, completion: nil)
+                    }, completion: nil)
                 }
                 
             }

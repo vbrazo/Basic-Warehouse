@@ -16,19 +16,40 @@ public class CoreDataStack {
     
     private let modelName = "discount_ascii_warehouse"
     
+    public func newPrivateQueueContext() -> NSManagedObjectContext {
+        let privateQueueContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        privateQueueContext.parentContext = self.mainContext
+        privateQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return privateQueueContext
+    }
+    
     public lazy var mainContext: NSManagedObjectContext = {
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.psc
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext.parentContext = self.masterContext
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }()
 
+    private lazy var masterContext: NSManagedObjectContext = {
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = self.psc
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        return managedObjectContext
+    }()
+    
     public func saveContext(context: NSManagedObjectContext) {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-                abort()
+        context.performBlockAndWait {
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch {
+                    print("ERROR saving context \(context.description) - \(error)")
+                }
+            } else {
+                print("SKIPPED saving context \(context.description) because there are no changes")
+            }
+            if let parentContext = context.parentContext {
+                self.saveContext(parentContext)
             }
         }
     }

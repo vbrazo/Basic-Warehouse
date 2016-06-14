@@ -22,8 +22,8 @@ class discount_ascii_warehouseTests: XCTestCase {
         super.setUp()
         
         self.coreDataStack = TestCoreDataStack()
-        self.warehouseService = WarehouseService(context: coreDataStack.mainContext, coreDataStack: coreDataStack)
-        self.tagService = TagService(context: coreDataStack.mainContext, coreDataStack: coreDataStack)
+        self.warehouseService = WarehouseService(context: coreDataStack.newPrivateQueueContext(), coreDataStack: coreDataStack)
+        self.tagService = TagService(context: coreDataStack.newPrivateQueueContext(), coreDataStack: coreDataStack)
 
     }
 
