@@ -24,7 +24,7 @@ public class CoreDataStack {
     }
     
     public lazy var mainContext: NSManagedObjectContext = {
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.parentContext = self.masterContext
         managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
@@ -45,8 +45,6 @@ public class CoreDataStack {
                 } catch {
                     print("ERROR saving context \(context.description) - \(error)")
                 }
-            } else {
-                print("SKIPPED saving context \(context.description) because there are no changes")
             }
             if let parentContext = context.parentContext {
                 self.saveContext(parentContext)
