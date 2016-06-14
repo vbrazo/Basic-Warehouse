@@ -32,7 +32,13 @@ To [install CocoaPods](https://cocoapods.org/#install) run the following in the 
 
 Core Data can decrease by 50 to 70 percent the amount of code you write to support the model layer. This is primarily due to the following built-in features that you do not have to implement, test, or optimize.
 
-Managed object context used: `main` context.
+Managed object context used: `main`, `private` and `master`.
+
+In this setup, all background queues are given a brand new private queue context. These contexts are created with the concurrency type .PrivateQueueConcurrencyType. They are temporary and will get destroyed once the background queue is done performing a task. The overhead for creating a new instance of a private queue context is very low. Therefore, we can create as many of them as we need.
+
+The main queue context is a special context that should only be accessed from the main (UI) queue. It is created with the concurrency type .MainQueueConcurrencyType. It acts as a parent for all temporary private queue contexts.
+
+Finally, the master context which also has the concurrency type NSPrivateQueueConcurrencyType acts as a parent for the main queue context itself. The master context is the only one that has access to the persistent store coordinator which is responsible for saving or reading data from an underlying SQLite database.
 
 ##Collection View Controller
 
