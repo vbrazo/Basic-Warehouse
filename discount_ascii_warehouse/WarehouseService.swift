@@ -11,16 +11,16 @@ import SwiftyJSON
 
 public class WarehouseService: MainService {
        
-    public func add(uid: Int16, face: String, id: String, price: Float, size: Int16, stock: Int16, tags: JSON) -> Warehouse? {
+    public func add(uid: Int, face: String, id: String, price: Float, size: Int, stock: Int, tags: JSON) -> Warehouse? {
         
         let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.context) as! Warehouse
         
-        warehouse.uid = uid
+        warehouse.uid = Int32(uid)
         warehouse.face = face
         warehouse.id = id
         warehouse.price = price
-        warehouse.size = size
-        warehouse.stock = stock
+        warehouse.size = Int32(size)
+        warehouse.stock = Int32(stock)
         
         let tagService = TagService(context: self.context, coreDataStack: self.coreDataStack)
         
@@ -60,12 +60,12 @@ public class WarehouseService: MainService {
                 for i in 0...response.count-1 {
                     if let info = response[i] {
                         let hash = info[0]
-                        self.add(Int16(skip+i),
+                        self.add(skip+i,
                                  face: hash["face"].stringValue,
                                  id: hash["id"].stringValue,
                                  price: hash["price"].floatValue,
-                                 size: Int16(hash["size"].intValue),
-                                 stock: Int16(hash["stock"].intValue),
+                                 size: hash["size"].intValue,
+                                 stock: hash["stock"].intValue,
                                  tags: hash["tags"])
                     }
                 }

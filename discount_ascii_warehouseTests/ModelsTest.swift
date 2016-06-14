@@ -39,11 +39,11 @@ class discount_ascii_warehouseTests: XCTestCase {
     
     func testAddWarehouse() {
         
-        let uid = Int16(1)
+        let uid = 1
         let face = "test"
         let id = "( ⚆ _ ⚆ )"
-        let size = Int16(1)
-        let stock = Int16(1)
+        let size = 1
+        let stock = 1
         let tags : JSON = []
         
         let warehouse = self.warehouseService.add(uid,
