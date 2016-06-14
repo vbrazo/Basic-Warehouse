@@ -12,9 +12,9 @@ import SwiftyJSON
 
 public struct CurrentlyInStock {
     enum Type: Int {
-        case SHOW = 0, HIDE
+        case ALL = 0, ONLY
     }
-    var type: Type = .SHOW
+    var type: Type = .ONLY
 }
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
@@ -31,14 +31,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var stock = CurrentlyInStock()
     let globalHelper = GlobalHelper()
-
+    
     let tagService = TagService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
     let warehouseService = WarehouseService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
     
     var updatingInfinityScroll = false
     
     lazy var fetchedResultsController : NSFetchedResultsController = {
-       
+        
         let managedContext = CoreDataStack().mainContext
         let fetchRequest = NSFetchRequest(entityName: "Warehouses")
         let sortDescriptor = NSSortDescriptor(key: "uid", ascending: true)
@@ -63,7 +63,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.txtSearch.delegate = self
         
         self.refreshControlBottom.attributedTitle = NSAttributedString(string: "Refreshing")
-            
+        
         self.refreshControlBottom.triggerVerticalOffset = 100
         self.collectionView.bottomRefreshControl = self.refreshControlBottom
         
@@ -115,7 +115,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             }
                         })
                         
-                    }, completion: nil)
+                        }, completion: nil)
                 }
                 
             }
@@ -153,7 +153,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.warehouseService.reset("Warehouses") { (response) in
             self.tagService.reset("Tags") { (response) in
                 self.txtSearch.text = nil
-                self.stock.type = .SHOW
+                self.stock.type = .ONLY
                 self.timer.invalidate()
             }
         }
@@ -182,24 +182,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func btnCurrentlyInStock(sender: AnyObject){
         
-        if (self.stock.type == .SHOW){
-            self.stock.type = .HIDE
-            self.labelInStock.text = "Show items currently in-stock"
+        if (self.stock.type == .ONLY){
+            self.stock.type = .ALL
+            self.labelInStock.text = "Show all items"
         } else {
-            self.stock.type = .SHOW
-            self.labelInStock.text = "Show items"
+            self.stock.type = .ONLY
+            self.labelInStock.text = "Only show items currently in-stock"
         }
         
         self.startRequest()
-                
+        
     }
     
     @IBAction func btnSearch(sender: AnyObject) {
         self.startRequest()
     }
-
+    
 }
-
 
 extension ViewController: UICollectionViewDataSource {
     
