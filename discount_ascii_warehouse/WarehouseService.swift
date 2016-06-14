@@ -30,6 +30,13 @@ public class WarehouseService: MainService {
             }
         }
         
+        do {
+            try warehouse.validateForInsert()
+        } catch {
+            let validationError = error as NSError
+            print(validationError)
+        }
+        
         self.coreDataStack.saveContext(self.context)
         
         return warehouse

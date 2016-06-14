@@ -17,6 +17,10 @@ public struct CurrentlyInStock {
     var type: Type = .ONLY
 }
 
+enum updatingInfinityScroll {
+    case OFF, ON
+}
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var txtSearch: UITextField!
@@ -29,13 +33,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timer = NSTimer()
     var refreshControlBottom = UIRefreshControl()
     
+    var infinityScrollStatus = updatingInfinityScroll.OFF
+    
     var stock = CurrentlyInStock()
     let globalHelper = GlobalHelper()
     
     let tagService = TagService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
     let warehouseService = WarehouseService(context: CoreDataStack().mainContext, coreDataStack: CoreDataStack())
-    
-    var updatingInfinityScroll = false
     
     lazy var fetchedResultsController : NSFetchedResultsController = {
         
@@ -92,9 +96,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
         let endScrolling = scrollView.contentOffset.y + scrollView.frame.size.height
-        if (endScrolling >= scrollView.contentSize.height+15 && self.updatingInfinityScroll == false) {
+        if (endScrolling >= scrollView.contentSize.height+15 && self.infinityScrollStatus == .OFF) {
             
-            self.updatingInfinityScroll = true
+            self.infinityScrollStatus = .ON
             
             if self.collectionView.frame.origin.y > 0 {
                 
@@ -109,7 +113,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         
                         dispatch_async(dispatch_get_main_queue(), {
                             self.refreshFetchedResults()
-                            self.updatingInfinityScroll = false
+                            self.infinityScrollStatus = .OFF
                             if self.refreshControlBottom.refreshing {
                                 self.refreshControlBottom.endRefreshing()
                             }
