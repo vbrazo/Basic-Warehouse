@@ -1,8 +1,14 @@
+#Intro
+
+You can access my video on Youtube by clicking in this [link](https://youtu.be/EFzcWYTKqsg). The video contains all the explanations that I wrote below and I try to explain a few things better. You highly recommend you to watch my video. I tried to keep it as short as possible.
+
+If you want to check my LinkedIn profile out, check this [link](https://www.linkedin.com/in/vbrazo) out
+
 #Installation
 
 Grab the latest code version from [GitHub](https://github.com/vbrazo/Discount-Ascii-Warehouse.git):
 
-	$ git clone https://github.com/vbrazo/Discount-Ascii-Warehouse.git
+> git clone https://github.com/vbrazo/Discount-Ascii-Warehouse.git
 
 Or download using [this link](https://github.com/vbrazo/Discount-Ascii-Warehouse/tree/master/Archives/discount_ascii_warehouse.zip)
 
@@ -16,33 +22,51 @@ To be able to compile the code you need to have XCode 7.2 and iOS (>=) 8.0 insta
 
 This project uses [CocoaPods](https://cocoapods.org) as dependency manager to install and maintain third party libraries.
 To [install CocoaPods](https://cocoapods.org/#install) run the following in the OS terminal:
-	
-	$ sudo gem install cocoapods
+
+> sudo gem install cocoapods
 
 #Notes
 
 ##Core Data
 [Core Data](https://developer.apple.com/library/tvos/documentation/Cocoa/Conceptual/CoreData/index.html) is used to manage the model layer objects on the application. With this structure we are able to maintain the view controllers synchronized as quickly as the model is updated.
 
-Managed object context used: 
-the `main` context to deal with the UI.
-the `private` context to insert/update info in the core data models.
+Core Data can decrease by 50 to 70 percent the amount of code you write to support the model layer. This is primarily due to the following built-in features that you do not have to implement, test, or optimize.
+
+Managed object context used: `main` context.
 
 ##Collection View Controller
 
 I chose collection view controller to display the data because of the distinct cell widths and the flexibility it brings to cell arrangement.
 
 ##SwiftyJSON
-[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) makes it easy to deal with JSON data in Swift.
+[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) makes it easy to deal with JSON data in Swift. Parsing and deserializing JSON is a little more tedious due to Swift optionals and type-safety. SwiftyJSON helps our project with that and keeps the code clean.
 
 ##SwiftHTTP
-[SwiftHTTP](https://github.com/daltoniam/SwiftHTTP) is a thin wrapper around NSURLSession in Swift to simplify HTTP requests.
+[SwiftHTTP](https://github.com/daltoniam/SwiftHTTP) is a thin wrapper around NSURLSession in Swift to simplify HTTP requests. It offers a few cool features such as:
+
+- Convenient Closure APIs
+- NSOperationQueue Support
+- Parameter Encoding
+- Custom Response Serializer
+- Builtin JSON Response Serialization
+- Upload/Download with Progress Closure
+- Concise Codebase
 
 ##CCBottomRefreshControl
-[BottomRefreshControl](https://github.com/vlasov/CCBottomRefreshControl) helped me to add bottomRefreshControl property, that could be assigned to UIRefreshControl class instance. It basically implements an ability to add native iOS bottom pull-up to refresh control to UITableView or UICollectionView
+[BottomRefreshControl](https://github.com/vlasov/CCBottomRefreshControl) helped me to add bottomRefreshControl property, that could be assigned to UIRefreshControl class instance. It basically implements an ability to add native iOS bottom pull-up to refresh control to UITableView or UICollectionView.
 
 ##XCTest
-[XCTest](http://nshipster.com/xctestcase/) is the testing framework. As you may know, tests are codes you write that exercise your app and library code and results in a pass or fail result, measured against a set of expectations. In this project we have a few tests 
+[XCTest](http://nshipster.com/xctestcase/) is the testing framework. As you may know, tests are codes you write that exercise your app and library code and results in a pass or fail result, measured against a set of expectations. In this project we have a few tests. The name of the functions are:
+
+- testAddWarehouse
+- testResetWarehouse
+- testResetTag
+
+###UI 
+
+- testUserFilterAndSearch
+- testBottomPullToRefresh
+
 
 #What kinds of things do you look for in the code, technology choices, team practices etc. that can help to make a project successful? 
 
@@ -51,15 +75,9 @@ I chose collection view controller to display the data because of the distinct c
 2. Style
 3. Naming
 4. Test coverage: Is there a test for this code?
-5. Design
-How does the code fit with the overall architecture?
-What design patterns are used in the new code?
-Does the new code introduce duplication? If so, should we refactor to a more reusable pattern?
-6. Readability & Maintainability
-Is it possible to understand what the code does by reading it?
-Are there test cases that haven’t been considered?
-7. Functionality
-Any potential security problems?
+5. Design: How does the code fit with the overall architecture? What design patterns are used in the new code? Does the new code introduce duplication? If so, should we refactor to a more reusable pattern?
+6. Readability & Maintainability: Is it possible to understand what the code does by reading it? Are there test cases that haven’t been considered?
+7. Functionality: Any potential security problems?
 
 #Technology choices:
 In this section, we are going to discuss about mobile app development technology. First you have to decide what kind of app works best for you: native, hybrid or web.
