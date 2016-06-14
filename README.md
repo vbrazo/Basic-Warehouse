@@ -1,6 +1,6 @@
 #Intro
 
-You can access my video on Youtube by clicking in this [link](https://youtu.be/EFzcWYTKqsg). The video contains all the explanations that I wrote below and I try to explain a few things better. You highly recommend you to watch my video. I tried to keep it as short as possible.
+You can access my video on Youtube by clicking in this [link](https://youtu.be/qXR-CLfWwXY). The video contains all the explanations that I wrote below and I try to explain a few things better. You highly recommend you to watch my video. I tried to keep it as short as possible.
 
 If you want to check my LinkedIn profile out, check this [link](https://www.linkedin.com/in/vbrazo) out
 
