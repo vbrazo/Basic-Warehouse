@@ -70,6 +70,7 @@ I chose collection view controller to display the data because of the distinct c
 
 ###UI 
 
+- testInitialStateIsCorrect
 - testUserFilterAndSearch
 - testBottomPullToRefresh
 

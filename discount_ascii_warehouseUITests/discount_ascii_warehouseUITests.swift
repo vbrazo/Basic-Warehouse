@@ -44,7 +44,7 @@ class discount_ascii_warehouseUITests: XCTestCase {
     
     func testBottomPullToRefresh() {
         
-        sleep(2)
+        sleep(3)
         
         let firstCell = app.staticTexts["lblFace0"]
         let start = firstCell.coordinateWithNormalizedOffset(CGVectorMake(0, 30))

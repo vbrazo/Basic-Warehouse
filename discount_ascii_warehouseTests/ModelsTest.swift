@@ -31,6 +31,7 @@ class discount_ascii_warehouseTests: XCTestCase {
         super.tearDown()
         self.coreDataStack = nil
         self.warehouseService = nil
+        self.tagService = nil
     }
     
     //
@@ -44,18 +45,19 @@ class discount_ascii_warehouseTests: XCTestCase {
         let id = "( ⚆ _ ⚆ )"
         let size = 1
         let stock = 1
+        let price : Float = 1.2
         let tags : JSON = []
         
         let warehouse = self.warehouseService.add(uid,
                                                   face: face,
                                                   id: id,
-                                                  price: 1.2,
+                                                  price: price,
                                                   size: size,
                                                   stock: stock,
                                                   tags: tags)
         
         XCTAssertNotNil(warehouse, "Warehouse should not be nil")
-        XCTAssertNotNil(warehouse?.face, "Camper should not be nil")
+        XCTAssertNotNil(warehouse?.face, "Face should not be nil")
         XCTAssertTrue(warehouse?.face == "test")
         XCTAssertTrue(warehouse?.id == "( ⚆ _ ⚆ )")
         

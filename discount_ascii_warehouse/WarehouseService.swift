@@ -13,7 +13,6 @@ public class WarehouseService: MainService {
        
     public func add(uid: Int, face: String, id: String, price: Float, size: Int, stock: Int, tags: JSON) -> Warehouse? {
         
-        
         let warehouse = NSEntityDescription.insertNewObjectForEntityForName("Warehouses", inManagedObjectContext: self.context) as! Warehouse
         
         warehouse.uid = Int32(uid)
