@@ -6,11 +6,11 @@ If you want to check my LinkedIn profile out, check this [link](https://www.link
 
 #Installation
 
-Grab the latest code version from [GitHub](https://github.com/vbrazo/Discount-Ascii-Warehouse.git):
+Grab the latest code version from [GitHub](https://github.com/vbrazo/Swift-Warehouse.git):
 
 > git clone https://github.com/vbrazo/Discount-Ascii-Warehouse.git
 
-Or download using [this link](https://github.com/vbrazo/Discount-Ascii-Warehouse/tree/master/Archives/discount_ascii_warehouse.zip)
+Or download using [this link](https://github.com/vbrazo/Swift-Warehouse/tree/master/Archives/Swift-Warehouse.zip)
 
 ##Dependencies
 To be able to compile this project you need the following installed on your system.
