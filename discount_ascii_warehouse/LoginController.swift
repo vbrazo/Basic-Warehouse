@@ -13,13 +13,20 @@ import CoreLocation
 class loginController : UIViewController, FBSDKLoginButtonDelegate {
     
     let global = GlobalHelper()
-    
+
     let loginView : FBSDKLoginButton = FBSDKLoginButton()
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        let loginManager = FBSDKLoginManager()
-        loginManager.logOut()
+        
+        // checks whether the user has an auth_token or not
+        if let _ = self.global.defaults.stringForKey("auth_token") {
+            self.goToFeed()
+        } else {
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+        }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -74,11 +81,12 @@ class loginController : UIViewController, FBSDKLoginButtonDelegate {
                         }
                         
                         self.global.request(ROUTES.facebook_auth, params: params, headers: nil, type: .POST) { (response) in
-                            dispatch_async(dispatch_get_main_queue()) {
-                                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WarehouseID")
-                                self.presentViewController(vc, animated: false, completion: nil)
+                            if let user_response = response[0] {
+                                self.global.defaults.setObject(user_response["auth_token"].description, forKey: "auth_token")
+                                self.goToFeed()
                             }
                         }
+                        
                     }
                 })
             }
@@ -87,6 +95,13 @@ class loginController : UIViewController, FBSDKLoginButtonDelegate {
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("User Logged Out")
+    }
+    
+    func goToFeed(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WarehouseID")
+            self.presentViewController(vc, animated: false, completion: nil)
+        }
     }
     
 }

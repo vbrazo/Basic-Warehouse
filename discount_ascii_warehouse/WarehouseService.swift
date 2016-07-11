@@ -56,6 +56,8 @@ public class WarehouseService: MainService {
         
         self.global.request(ROUTES.search, params: params, headers: nil, type: .GET) { (response) in
             
+            print(response)
+            
             if response.count > 0 {
                 for i in 0...response.count-1 {
                     if let info = response[i] {
