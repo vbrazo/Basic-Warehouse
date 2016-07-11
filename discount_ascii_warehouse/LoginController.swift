@@ -12,6 +12,8 @@ import CoreLocation
 
 class loginController : UIViewController, FBSDKLoginButtonDelegate {
     
+    let global = GlobalHelper()
+    
     let loginView : FBSDKLoginButton = FBSDKLoginButton()
     
     override func viewDidLoad(){
@@ -50,17 +52,33 @@ class loginController : UIViewController, FBSDKLoginButtonDelegate {
                         print("Error: \(error)")
                     } else {
                         
-                        print(result)
+                        var params = [String: AnyObject]()
+                        
+                        if let name = result.valueForKey("name") {
+                            self.global.defaults.setObject(name.description, forKey: "name")
+                            params["user[name]"] = name.description
+                        }
+                        
+                        if let facebook_id = result.valueForKey("id") {
+                            self.global.defaults.setObject(facebook_id.description, forKey: "facebook_id")
+                            params["user[url_facebook_image]"] = facebook_id.description
+                        }
+                        
+                        if let email = result.valueForKey("email") {
+                            self.global.defaults.setObject(email.description, forKey: "email")
+                            params["user[email]"] = email.description
+                        }
                         
                         if let token = FBSDKAccessToken.currentAccessToken()?.tokenString {
-                            print("token = \(token)")
+                            params["user[facebook_token]"] = token
                         }
                         
-                        dispatch_async(dispatch_get_main_queue()) {
-                            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WarehouseID")
-                            self.presentViewController(vc, animated: false, completion: nil)
+                        self.global.request(ROUTES.facebook_auth, params: params, headers: nil, type: .POST) { (response) in
+                            dispatch_async(dispatch_get_main_queue()) {
+                                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WarehouseID")
+                                self.presentViewController(vc, animated: false, completion: nil)
+                            }
                         }
-                        
                     }
                 })
             }

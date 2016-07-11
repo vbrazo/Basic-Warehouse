@@ -54,7 +54,7 @@ public class WarehouseService: MainService {
         params["skip"] = skip
         params["onlyInStock"] = stock.type.rawValue
         
-        self.global.request(ROUTES.search, params: params, headers: nil, type: HTTPTYPE.GET) { (response) in
+        self.global.request(ROUTES.search, params: params, headers: nil, type: .GET) { (response) in
             
             if response.count > 0 {
                 for i in 0...response.count-1 {
