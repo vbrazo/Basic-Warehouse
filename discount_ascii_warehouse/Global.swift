@@ -57,14 +57,13 @@ public class GlobalHelper {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     
-    func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(Dictionary<Int,JSON>) -> Void)  {
+    func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(JSON) -> Void)  {
         
         dispatch_async(dispatch_get_main_queue(), {
             
             do {
                 
                 var opt : HTTP!
-                var results : Dictionary<Int,JSON>=[:]
                 
                 switch type {
                     case .GET:
@@ -78,27 +77,18 @@ public class GlobalHelper {
                 }
                 
                 opt.start { response in
-                    
                     if let err = response.error {
                         print("error: \(err.localizedDescription)")
                         return
                     }
                     
-                    if let text = response.text {
-                
-                        let fullHash = text.characters.split{$0 == "\n"}.map(String.init)
-                        
-                        if fullHash.count > 0 {
-                            for i in 0...fullHash.count-1 {
-                                let json = "[\(fullHash[i])]"
-                                results[i] = JSON(json.parseJSONString!)
-                            }
-                        }
-                  
-                        completion(results)
-                    
-                    } else {
-                        print("got an error")
+                    do {
+                        let object:AnyObject? = try NSJSONSerialization.JSONObjectWithData(response.data, options: .AllowFragments)
+                        let json = JSON(object!)
+                        return completion(json)
+                    } catch _ as NSError {
+                        return
+                    } catch {
                         return
                     }
                     

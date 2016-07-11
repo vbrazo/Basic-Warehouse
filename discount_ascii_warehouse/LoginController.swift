@@ -80,11 +80,9 @@ class loginController : UIViewController, FBSDKLoginButtonDelegate {
                             params["user[facebook_token]"] = token
                         }
                         
-                        self.global.request(ROUTES.facebook_auth, params: params, headers: nil, type: .POST) { (response) in
-                            if let user_response = response[0] {
-                                self.global.defaults.setObject(user_response["auth_token"].description, forKey: "auth_token")
-                                self.goToFeed()
-                            }
+                        self.global.request(ROUTES.facebook_auth, params: params, headers: nil, type: .POST) { (response) in 
+                            self.global.defaults.setObject(response["auth_token"].description, forKey: "auth_token")
+                            self.goToFeed()
                         }
                         
                     }

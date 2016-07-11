@@ -56,20 +56,15 @@ public class WarehouseService: MainService {
         
         self.global.request(ROUTES.search, params: params, headers: nil, type: .GET) { (response) in
             
-            print(response)
-            
             if response.count > 0 {
                 for i in 0...response.count-1 {
-                    if let info = response[i] {
-                        let hash = info[0]
-                        self.add(skip+i,
-                                 face: hash["face"].stringValue,
-                                 id: hash["id"].stringValue,
-                                 price: hash["price"].floatValue,
-                                 size: hash["size"].intValue,
-                                 stock: hash["stock"].intValue,
-                                 tags: hash["tags"])
-                    }
+                    self.add(skip+i,
+                             face: response[i]["face"].stringValue,
+                             id: response[i]["id"].stringValue,
+                             price: response[i]["price"].floatValue,
+                             size: response[i]["size"].intValue,
+                             stock: response[i]["stock"].intValue,
+                             tags: response[i]["tags"])
                 }
                 
                 completionModels(true)
