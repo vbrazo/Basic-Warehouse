@@ -8,7 +8,7 @@ If you want to check my LinkedIn profile out, check this [link](https://www.link
 
 Grab the latest code version from [GitHub](https://github.com/vbrazo/Swift-Warehouse.git):
 
-> git clone https://github.com/vbrazo/Discount-Ascii-Warehouse.git
+> git clone https://github.com/vbrazo/Swift-Warehouse.git
 
 Or download using [this link](https://github.com/vbrazo/Swift-Warehouse/tree/master/Archives/Swift-Warehouse.zip)
 
