@@ -8,7 +8,7 @@
 
 struct ROUTES {
     
-    static let base_api = "http://74.50.59.155:5000/api"
-    static let search = "\(base_api)/search"
+    static let base_api = "https://rorwarehouse.herokuapp.com/api/v1"
+    static let search = "\(base_api)/warehouse/search"
     
 }
