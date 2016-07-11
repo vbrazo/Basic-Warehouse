@@ -15,11 +15,47 @@ enum HTTPTYPE {
     case GET, PUT, DELETE, POST
 }
 
+struct User {
+    
+    var defaults = NSUserDefaults.standardUserDefaults()
+    var auth_token : String = ""
+    var email : String = ""
+    var facebook_id : String = ""
+    var name : String = ""
+    var user_id : String = ""
+    
+    init(){
+        
+        if let auth_token = defaults.stringForKey("auth_token") {
+            self.auth_token = auth_token
+        }
+        
+        if let email = defaults.stringForKey("email") {
+            self.email = email
+        }
+        
+        if let facebook_id = defaults.stringForKey("facebook_id") {
+            self.facebook_id = facebook_id
+        }
+        
+        if let name = defaults.stringForKey("name") {
+            self.name = name
+        }
+        
+        if let user_id = defaults.stringForKey("user_id") {
+            self.user_id = user_id
+        }
+        
+    }
+}
+
 public class GlobalHelper {
     
     var screenWidth: CGFloat = UIScreen.mainScreen().bounds.width
     var screenHeight: CGFloat = UIScreen.mainScreen().bounds.height
     let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     func request(url: String, params: Dictionary<String,AnyObject>?, headers: Dictionary<String,String>?, type: HTTPTYPE, completion:(Dictionary<Int,JSON>) -> Void)  {
         
