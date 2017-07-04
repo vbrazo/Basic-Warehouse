@@ -1,4 +1,4 @@
-#Installation
+# Installation
 
 Grab the latest code version from [GitHub](https://github.com/vbrazo/Swift-Warehouse.git):
 
@@ -6,22 +6,22 @@ Grab the latest code version from [GitHub](https://github.com/vbrazo/Swift-Wareh
 
 Or download using [this link](https://github.com/vbrazo/Swift-Warehouse/tree/master/Archives/Swift-Warehouse.zip)
 
-##Dependencies
+## Dependencies
 To be able to compile this project you need the following installed on your system.
 
-###XCode
+### XCode
 To be able to compile the code you need to have XCode 7.2 and iOS (>=) 8.0 installed.
 
-###CocoaPods
+### CocoaPods
 
 This project uses [CocoaPods](https://cocoapods.org) as dependency manager to install and maintain third party libraries.
 To [install CocoaPods](https://cocoapods.org/#install) run the following in the OS terminal:
 
 > sudo gem install cocoapods
 
-#Notes
+# Notes
 
-##Core Data
+## Core Data
 [Core Data](https://developer.apple.com/library/tvos/documentation/Cocoa/Conceptual/CoreData/index.html) is used to manage the model layer objects on the application. With this structure we are able to maintain the view controllers synchronized as quickly as the model is updated.
 
 Core Data can decrease by 50 to 70 percent the amount of code you write to support the model layer. This is primarily due to the following built-in features that you do not have to implement, test, or optimize.
@@ -34,19 +34,19 @@ The main queue context is a special context that should only be accessed from th
 
 Finally, the master context which also has the concurrency type NSPrivateQueueConcurrencyType acts as a parent for the main queue context itself. The master context is the only one that has access to the persistent store coordinator which is responsible for saving or reading data from an underlying SQLite database.
 
-##Collection View Controller
+## Collection View Controller
 I chose collection view controller to display the data because of the distinct cell widths and the flexibility it brings to cell arrangement.
 
-##Facebook SDK
+## Facebook SDK
 The [Facebook SDK for iOS](https://developers.facebook.com/docs/facebook-login/ios) enables people to sign into your app with Facebook Login. 
 
-##CCBottomRefreshControl
+## CCBottomRefreshControl
 [BottomRefreshControl](https://github.com/vlasov/CCBottomRefreshControl) helped me to add bottomRefreshControl property, that could be assigned to UIRefreshControl class instance. It basically implements an ability to add native iOS bottom pull-up to refresh control to UITableView or UICollectionView.
 
-##SwiftyJSON
+## SwiftyJSON
 [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) makes it easy to deal with JSON data in Swift. Parsing and deserializing JSON is a little more tedious due to Swift optionals and type-safety. SwiftyJSON helps our project with that and keeps the code clean.
 
-##SwiftHTTP
+## SwiftHTTP
 [SwiftHTTP](https://github.com/daltoniam/SwiftHTTP) is a thin wrapper around NSURLSession in Swift to simplify HTTP requests. It offers a few cool features such as:
 
 - Convenient Closure APIs
@@ -57,14 +57,14 @@ The [Facebook SDK for iOS](https://developers.facebook.com/docs/facebook-login/i
 - Upload/Download with Progress Closure
 - Concise Codebase
 
-##XCTest
+## XCTest
 [XCTest](http://nshipster.com/xctestcase/) is the testing framework. As you may know, tests are codes you write that exercise your app and library code and results in a pass or fail result, measured against a set of expectations. In this project we have a few tests. The name of the functions are:
 
 - testAddWarehouse
 - testResetWarehouse
 - testResetTag
 
-###UI 
+### UI 
 
 - testInitialStateIsCorrect
 - testUserFilterAndSearch
@@ -73,7 +73,7 @@ The [Facebook SDK for iOS](https://developers.facebook.com/docs/facebook-login/i
 
 #What kinds of things do you look for in the code, technology choices, team practices etc. that can help to make a project successful? 
 
-###Things that I look for in codes:
+### Things that I look for in codes:
 1. Formatting
 2. Style
 3. Naming
@@ -82,7 +82,7 @@ The [Facebook SDK for iOS](https://developers.facebook.com/docs/facebook-login/i
 6. Readability & Maintainability: Is it possible to understand what the code does by reading it? Are there test cases that haven’t been considered?
 7. Functionality: Any potential security problems?
 
-#Technology choices:
+# Technology choices:
 In this section, we are going to discuss about mobile app development technology. First you have to decide what kind of app works best for our project: native, hybrid or web.
 
 Type | Description | Advantage | Disadvantage
@@ -95,13 +95,13 @@ If this was the beginning of a long-term project, we would need to consider a lo
 - what features we would implement to decide which type of app would work best for us
 - how much money we have in the bank to invest.
 
-#Team practices:
+# Team practices:
 
-##Building your team:
+## Building your team:
 1. Understand what type of values and culture you would like to implement in your team.<BR>
 2. Bring people who are complementary. Don't look only for skills, look in their eyes and look for the brightness.<BR>
 
-##Virtual Teams
+## Virtual Teams
 1. Understand what the goals of the projects are.<BR>
 2. Build and use a communications management plan and team operating agreements.<BR>
 3. Select appropriate technologies for team interactions. Use tools like Google Drive (spreadsheets), Slack and Trello to monitor the projects.<BR>
